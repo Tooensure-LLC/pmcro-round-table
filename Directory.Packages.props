@@ -1,0 +1,39 @@
+<Project>
+  <!--
+    Central Package Management. Every version here is checked against nuget.org on the date shown, per eng/STACK.md.
+    Stable where upstream ships stable; PREVIEW/ALPHA are labeled. Checked: 2026-09-29.
+  -->
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
+  </PropertyGroup>
+  <ItemGroup Label="Microsoft Agent Framework (core stable 1.23.0, released 2026-09-28)">
+    <PackageVersion Include="Microsoft.Agents.AI" Version="1.23.0" />
+    <PackageVersion Include="Microsoft.Agents.AI.Workflows" Version="1.23.0" />
+    <PackageVersion Include="Microsoft.Agents.AI.DevUI" Version="1.23.0-preview.260928.1" />            <!-- PREVIEW -->
+    <PackageVersion Include="Microsoft.Agents.AI.Hosting" Version="1.23.0-preview.260928.1" />          <!-- PREVIEW -->
+    <PackageVersion Include="Microsoft.Agents.AI.Hosting.OpenAI" Version="1.23.0-alpha.260928.1" />     <!-- ALPHA -->
+  </ItemGroup>
+  <ItemGroup Label="Models and tools">
+    <PackageVersion Include="OllamaSharp" Version="5.4.30" />
+    <PackageVersion Include="CommunityToolkit.Aspire.OllamaSharp" Version="13.5.0" />
+    <PackageVersion Include="ModelContextProtocol" Version="2.2.0" />
+  </ItemGroup>
+  <ItemGroup Label="Aspire service defaults (template versions; OpenTelemetry raised to latest stable because MAF 1.23 requires OpenTelemetry.Api >= 1.18)">
+    <PackageVersion Include="Microsoft.Extensions.Http.Resilience" Version="10.8.0" />
+    <PackageVersion Include="Microsoft.Extensions.ServiceDiscovery" Version="10.8.0" />
+    <PackageVersion Include="OpenTelemetry.Api" Version="1.19.1" />
+    <PackageVersion Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.19.1" />
+    <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="1.19.1" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.19.0" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.Http" Version="1.19.0" />
+    <PackageVersion Include="OpenTelemetry.Instrumentation.Runtime" Version="1.19.0" />
+  </ItemGroup>
+  <ItemGroup Label="Tests (aspire-xunit template versions)">
+    <PackageVersion Include="Aspire.Hosting.Testing" Version="13.5.4" />
+    <PackageVersion Include="coverlet.collector" Version="6.0.4" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageVersion Include="xunit" Version="2.9.3" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="3.1.4" />
+  </ItemGroup>
+</Project>

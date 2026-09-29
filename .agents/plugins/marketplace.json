@@ -1,0 +1,36 @@
+{
+  "name": "tooensure-pmcro-skills",
+  "owner": {
+    "name": "Tooensure-LLC"
+  },
+  "interface": {
+    "displayName": "Tooensure / PMCR-O Skills"
+  },
+  "plugins": [
+    {
+      "name": "pmcro",
+      "source": "./plugins/pmcro",
+      "description": "The PMCR-O loop as skills (/pmcro:seed, /pmcro:loop, /pmcro:frame, /pmcro:check, /pmcro:seal, /pmcro:replay, /pmcro:commit) and the company seats as agents (@<bot-id>). Generated from company.json."
+    },
+    {
+      "name": "pmcro-authoring",
+      "source": "./plugins/pmcro-authoring",
+      "description": "Author PMCR-O agent skills from templates: scaffold SKILL.md, references, scripts and assets, validate them, and hold each new skill as a proposal until it is approved or rejected."
+    },
+    {
+      "name": "pmcro-docker",
+      "source": "./plugins/pmcro-docker",
+      "description": "Docker skills for PMCR-O trails: an engine baseline, a wrapper that logs every docker command into a trail, a .NET MCP server template, and a notebook test kit. No Docker build runs on the company PC until Shawn clears the hardware."
+    },
+    {
+      "name": "pmcro-docs",
+      "source": "./plugins/pmcro-docs",
+      "description": "Documentation skills for the PMCR-O company: DocFX docs product and simulate, a dry run of a plan into a simulated trail without writing product files."
+    },
+    {
+      "name": "pmcro-github",
+      "source": "./plugins/pmcro-github",
+      "description": "GitHub templates and workflow skills for the PMCR-O loop: seed issue form, PR template, CODEOWNERS, and workflows that replay trails, check the plugin layout and turn a seed issue into a queue PR, always stopping at a human merge."
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+name: seed-to-queue
+# Human gate: only the repository owner applying the "seed" label starts this. It opens a pull request and never merges.
+on:
+  issues:
+    types: [labeled]
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  seed:
+    if: github.event.label.name == 'seed' && github.event.sender.login == github.repository_owner
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Write the queue item and open a PR
+        env:
+          GH_TOKEN: ${{ github.token }}
+          N: ${{ github.event.issue.number }}
+          BODY: ${{ github.event.issue.body }}
+        run: |
+          set -euo pipefail
+          branch="seed/issue-$N"
+          file="queue/seed-issue-$N.json"
+          mkdir -p queue
+          jq -n --arg id "seed-issue-$N" --arg raw "$BODY" \
+            '{id:$id,status:"queued",routed_by:"github issue, label applied by owner",raw_intent:$raw,true_intent:"TODO: Chief of Staff writes this",done_means:[],owners:[]}' > "$file"
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git checkout -b "$branch"
+          git add "$file"
+          git commit -m "queue: seed from issue $N"
+          git push origin "$branch"
+          gh pr create --title "queue: seed from issue $N" --body "Raw words are verbatim from issue $N. The Chief of Staff fills true_intent and done_means. Owner reviews and merges." --base "${{ github.event.repository.default_branch }}" --head "$branch"

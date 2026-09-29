@@ -1,0 +1,28 @@
+name: marketplace-layout
+on:
+  pull_request:
+    paths: ['plugins/**', '.claude-plugin/**', '.agents/**', '.cursor-plugin/**', 'eng/**', 'tests/**']
+permissions:
+  contents: read
+jobs:
+  layout:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Layout tests
+        shell: pwsh
+        run: pwsh -NoProfile -ExecutionPolicy Bypass -File tests/marketplace/layout.tests.ps1
+      - name: Plugin layout (eng/skill-validator)
+        shell: pwsh
+        run: pwsh -NoProfile -ExecutionPolicy Bypass -File eng/skill-validator/Test-PluginLayout.ps1
+      - name: Validate skills
+        shell: pwsh
+        run: |
+          $fail = 0
+          foreach ($p in 'pmcro-authoring','pmcro-github','pmcro-docker') {
+            foreach ($s in Get-ChildItem "plugins/$p/skills" -Directory -ErrorAction SilentlyContinue) {
+              pwsh -NoProfile -ExecutionPolicy Bypass -File plugins/pmcro-authoring/skills/create-skill/scripts/validate-skill.ps1 -Path "plugins/$p/skills/$($s.Name)"
+              if ($LASTEXITCODE -ne 0) { $fail++ }
+            }
+          }
+          if ($fail -gt 0) { exit 1 }

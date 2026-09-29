@@ -1,0 +1,11 @@
+{
+    "name":  "pmcro-docker",
+    "version":  "0.1.0",
+    "description":  "Docker skills for PMCR-O trails: an engine baseline, a wrapper that logs every docker command into a trail, a .NET MCP server template, and a notebook test kit. No Docker build runs on the company PC until Shawn clears the hardware.",
+    "skills":  [
+                   "./skills/"
+               ],
+    "agents":  [
+                   "./agents/docker-operator.agent.md"
+               ]
+}

@@ -1,0 +1,8 @@
+{
+    "name":  "pmcro-authoring",
+    "version":  "0.1.0",
+    "description":  "Author PMCR-O agent skills from templates: scaffold SKILL.md, references, scripts and assets, validate them, and hold each new skill as a proposal until it is approved or rejected.",
+    "skills":  [
+                   "./skills/"
+               ]
+}

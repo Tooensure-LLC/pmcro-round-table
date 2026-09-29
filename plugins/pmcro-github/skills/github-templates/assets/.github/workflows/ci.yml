@@ -1,0 +1,30 @@
+name: ci
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: windows-latest
+    env:
+      CI: 'true'
+      DOTNET_NOLOGO: 'true'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+      - name: Generated files match company.json
+        shell: pwsh
+        run: |
+          pwsh -NoProfile -File tools/build.ps1
+          git diff --exit-code -- . ':!trails'
+      - name: Plugin marketplace layout
+        shell: pwsh
+        run: pwsh -NoProfile -File eng/skill-validator/Test-PluginLayout.ps1
+      - name: Build (warnings are errors)
+        run: dotnet build Pmcro.slnx -c Release
+      - name: Test
+        run: dotnet test Pmcro.slnx -c Release --no-build

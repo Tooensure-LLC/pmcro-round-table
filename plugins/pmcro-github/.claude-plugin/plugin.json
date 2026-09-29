@@ -1,0 +1,11 @@
+{
+    "name":  "pmcro-github",
+    "version":  "0.1.0",
+    "description":  "GitHub templates and workflow skills for the PMCR-O loop: seed issue form, PR template, CODEOWNERS, and workflows that replay trails, check the plugin layout and turn a seed issue into a queue PR, always stopping at a human merge.",
+    "skills":  [
+                   "./skills/"
+               ],
+    "agents":  [
+                   "./agents/github-steward.agent.md"
+               ]
+}

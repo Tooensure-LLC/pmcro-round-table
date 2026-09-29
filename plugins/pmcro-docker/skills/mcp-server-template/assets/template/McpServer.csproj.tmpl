@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net{{DotnetVersion}}</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <AssemblyName>{{ProjectName}}</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="ModelContextProtocol" Version="{{McpSdkVersion}}" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="{{HostingVersion}}" />
+  </ItemGroup>
+</Project>

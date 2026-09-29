@@ -1,0 +1,18 @@
+using System.ComponentModel;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using ModelContextProtocol.Server;
+
+var builder = Host.CreateApplicationBuilder(args);
+// stdio transport: stdout is the protocol, so all logs go to stderr
+builder.Logging.AddConsole(o => o.LogToStandardErrorThreshold = LogLevel.Trace);
+builder.Services.AddMcpServer().WithStdioServerTransport().WithToolsFromAssembly();
+await builder.Build().RunAsync();
+
+[McpServerToolType]
+public static class EchoTool
+{
+    [McpServerTool, Description("Echoes the message back.")]
+    public static string Echo(string message) => $"echo: {message}";
+}

@@ -1,0 +1,14 @@
+<Project>
+  <!-- Created by `dotnet new buildprops`; see https://aka.ms/dotnet/msbuild/customize -->
+  <PropertyGroup>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <Deterministic>true</Deterministic>
+    <ContinuousIntegrationBuild Condition="'$(CI)' == 'true'">true</ContinuousIntegrationBuild>
+    <RepositoryUrl>https://github.com/Tooensure-LLC/pmcro</RepositoryUrl>
+    <Authors>Tooensure LLC</Authors>
+    <Company>Tooensure LLC</Company>
+  </PropertyGroup>
+</Project>

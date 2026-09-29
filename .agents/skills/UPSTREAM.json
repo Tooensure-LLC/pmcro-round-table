@@ -1,0 +1,22 @@
+{
+    "source":  "https://github.com/dotnet/skills",
+    "ref":  "ff66f963fb82944910814f91e4aead62ff5c69eb",
+    "license":  "MIT",
+    "path":  ".agents/skills",
+    "skills":  [
+                   "create-skill",
+                   "create-skill-test",
+                   "improve-skill-quality",
+                   "create-custom-agent",
+                   "authoring-github-workflows"
+               ],
+    "files":  {
+                  "create-skill/SKILL.md":  "7C1AD8BBA33F768026560007D55384D6F4D0FAF45F2C69299152C4AB4E06EB33",
+                  "create-skill-test/SKILL.md":  "EFEABAEFC9C362BEFB116AEADC5E3513400C07253A5000EED69AD41D9849F05F",
+                  "improve-skill-quality/references/eval-triage.md":  "D680711BAAFDA8150A2C3053015CDD525814538CA3082D26957EC23E5CCE6FCE",
+                  "improve-skill-quality/references/writing-for-baseline-delta.md":  "A29B68F9B210C7D5ADE7A3AB04D1D722BD74A03E75575CFB27CEDA95B5F8BA52",
+                  "improve-skill-quality/SKILL.md":  "B1D5FE77A257E667F540D4936A7F2AB76D74973A58443D16528CC88DD70B33B2",
+                  "create-custom-agent/SKILL.md":  "7C32D6EF0FB7D2CA26EDBD3FE6CE69DFC5046E4085051AF6A54CB09AC36E5F76",
+                  "authoring-github-workflows/SKILL.md":  "0D3AFD20CB0BA60AC36A59C6EEB3B0F92222190685E08A5E72F867876828BBA1"
+              }
+}

@@ -1,0 +1,34 @@
+- name: Company
+  href: index.md
+- name: Seats
+  items:
+  - name: Chief of Staff
+    href: chiefs/chief-of-staff.md
+  - name: CEO
+    href: chiefs/ceo.md
+  - name: CTO Chief
+    href: chiefs/cto.md
+  - name: CTO Checker
+    href: chiefs/cto-checker.md
+  - name: CPO
+    href: chiefs/cpo.md
+  - name: CDO
+    href: chiefs/cdo.md
+  - name: CISO
+    href: chiefs/ciso.md
+  - name: COO
+    href: chiefs/coo.md
+  - name: CFO
+    href: chiefs/cfo.md
+  - name: CLO
+    href: chiefs/clo.md
+  - name: Chief Agent Officer
+    href: chiefs/chief-agent-officer.md
+  - name: CRO
+    href: chiefs/cro.md
+  - name: CMO
+    href: chiefs/cmo.md
+  - name: CCO
+    href: chiefs/cco.md
+  - name: Auditor
+    href: chiefs/auditor.md

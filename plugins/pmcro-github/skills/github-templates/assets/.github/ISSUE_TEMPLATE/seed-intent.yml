@@ -1,0 +1,20 @@
+name: Seed intent
+description: Your words, verbatim. The owner labels it "seed" to approve turning it into a queue item.
+body:
+  - type: textarea
+    id: raw_intent
+    attributes:
+      label: Your words, verbatim
+      description: Paste it exactly as you said it. Do not tidy it up.
+    validations:
+      required: true
+  - type: textarea
+    id: done_means
+    attributes:
+      label: How will we know it is done?
+      description: Proofs that can fail, one per line.
+  - type: input
+    id: owners
+    attributes:
+      label: Owning Chief or Chiefs
+      description: For example cto, cpo. Leave blank and the Chief of Staff routes it.

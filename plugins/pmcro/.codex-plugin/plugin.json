@@ -1,0 +1,8 @@
+{
+  "name": "pmcro",
+  "version": "0.1.0",
+  "description": "The PMCR-O loop as skills (/pmcro:seed, /pmcro:loop, /pmcro:frame, /pmcro:check, /pmcro:seal, /pmcro:replay, /pmcro:commit) and the company seats as agents (@<bot-id>). Generated from company.json.",
+  "skills": [
+    "./skills/"
+  ]
+}

@@ -1,0 +1,8 @@
+{
+    "name":  "pmcro-docs",
+    "version":  "0.1.0",
+    "description":  "Documentation skills for the PMCR-O company: DocFX docs product and simulate, a dry run of a plan into a simulated trail without writing product files.",
+    "skills":  [
+                   "./skills/"
+               ]
+}

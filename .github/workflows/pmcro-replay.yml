@@ -1,0 +1,27 @@
+name: pmcro-replay
+on:
+  pull_request:
+    paths: ['trails/**']
+permissions:
+  contents: read
+jobs:
+  replay:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Replay the sealed trails this PR touches
+        shell: pwsh
+        env:
+          BASE_REF: ${{ github.base_ref }}
+        run: |
+          $changed = git diff --name-only "origin/$env:BASE_REF...HEAD" -- trails | ForEach-Object { ($_ -split '/')[1] } | Sort-Object -Unique
+          $fail = 0
+          foreach ($t in $changed) {
+            if (Test-Path "trails/$t/disposition.json") {
+              pwsh -NoProfile -ExecutionPolicy Bypass -File tools/replay.ps1 "trails/$t"
+              if ($LASTEXITCODE -ne 0) { $fail++ }
+            } else { Write-Host "skip $t (not sealed yet)" }
+          }
+          if ($fail -gt 0) { exit 1 }

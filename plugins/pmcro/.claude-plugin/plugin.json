@@ -1,0 +1,25 @@
+{
+  "name": "pmcro",
+  "version": "0.1.0",
+  "description": "The PMCR-O loop as skills (/pmcro:seed, /pmcro:loop, /pmcro:frame, /pmcro:check, /pmcro:seal, /pmcro:replay, /pmcro:commit) and the company seats as agents (@<bot-id>). Generated from company.json.",
+  "skills": [
+    "./skills/"
+  ],
+  "agents": [
+    "./agents/chief-of-staff.agent.md",
+    "./agents/ceo.agent.md",
+    "./agents/cto.agent.md",
+    "./agents/cto-checker.agent.md",
+    "./agents/cpo.agent.md",
+    "./agents/cdo.agent.md",
+    "./agents/ciso.agent.md",
+    "./agents/coo.agent.md",
+    "./agents/cfo.agent.md",
+    "./agents/clo.agent.md",
+    "./agents/chief-agent-officer.agent.md",
+    "./agents/cro.agent.md",
+    "./agents/cmo.agent.md",
+    "./agents/cco.agent.md",
+    "./agents/auditor.agent.md"
+  ]
+}

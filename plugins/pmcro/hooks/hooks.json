@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "pwsh -NoProfile -ExecutionPolicy Bypass -File ${CLAUDE_PLUGIN_ROOT}/skills/frame/scripts/require-open-trail.ps1",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}

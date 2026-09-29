@@ -1,0 +1,5 @@
+# {{Name}}.ps1 - manual-first helper for the {{Name}} skill. Run from the repo root.
+param([switch]$WhatIf)
+$ErrorActionPreference = 'Stop'
+if ($WhatIf) { Write-Host 'dry run: nothing changed'; exit 0 }
+Write-Host 'TODO: implement, then add a must-fail case'

@@ -1,0 +1,10 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/Pmcro.AppHost/Pmcro.AppHost.csproj" />
+    <Project Path="src/Pmcro.Runtime/Pmcro.Runtime.csproj" />
+    <Project Path="src/Pmcro.ServiceDefaults/Pmcro.ServiceDefaults.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Pmcro.Tests/Pmcro.Tests.csproj" />
+  </Folder>
+</Solution>

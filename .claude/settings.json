@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.*)",
+      "Read(./secrets/**)",
+      "Bash(git push:*)"
+    ],
+    "ask": [
+      "Bash(dotnet tool install:*)",
+      "Bash(dotnet new install:*)",
+      "Bash(winget:*)",
+      "Bash(gh repo create:*)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit|NotebookEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "pwsh -NoProfile -ExecutionPolicy Bypass -File plugins/pmcro/skills/frame/scripts/require-open-trail.ps1",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}

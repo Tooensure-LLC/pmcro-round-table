@@ -1,0 +1,135 @@
+{
+  "marketplace": "Tooensure / PMCR-O Agent Company",
+  "version": "0.1.0",
+  "generated_from": "company.json",
+  "items": [
+    {
+      "id": "bot/chief-of-staff",
+      "type": "grok-bot-template",
+      "title": "Chief of Staff",
+      "group": "Leadership",
+      "source": "chiefs/chief-of-staff/AGENT.md",
+      "docs": "docs/company/chiefs/chief-of-staff.md"
+    },
+    {
+      "id": "bot/ceo",
+      "type": "grok-bot-template",
+      "title": "CEO",
+      "group": "Leadership",
+      "source": "chiefs/ceo/AGENT.md",
+      "docs": "docs/company/chiefs/ceo.md"
+    },
+    {
+      "id": "bot/cto",
+      "type": "grok-bot-template",
+      "title": "CTO Chief",
+      "group": "Build",
+      "source": "chiefs/cto/AGENT.md",
+      "docs": "docs/company/chiefs/cto.md"
+    },
+    {
+      "id": "bot/cto-checker",
+      "type": "grok-bot-template",
+      "title": "CTO Checker",
+      "group": "Build",
+      "source": "chiefs/cto-checker/AGENT.md",
+      "docs": "docs/company/chiefs/cto-checker.md"
+    },
+    {
+      "id": "bot/cpo",
+      "type": "grok-bot-template",
+      "title": "CPO",
+      "group": "Build",
+      "source": "chiefs/cpo/AGENT.md",
+      "docs": "docs/company/chiefs/cpo.md"
+    },
+    {
+      "id": "bot/cdo",
+      "type": "grok-bot-template",
+      "title": "CDO",
+      "group": "Build",
+      "source": "chiefs/cdo/AGENT.md",
+      "docs": "docs/company/chiefs/cdo.md"
+    },
+    {
+      "id": "bot/ciso",
+      "type": "grok-bot-template",
+      "title": "CISO",
+      "group": "Build",
+      "source": "chiefs/ciso/AGENT.md",
+      "docs": "docs/company/chiefs/ciso.md"
+    },
+    {
+      "id": "bot/coo",
+      "type": "grok-bot-template",
+      "title": "COO",
+      "group": "Run",
+      "source": "chiefs/coo/AGENT.md",
+      "docs": "docs/company/chiefs/coo.md"
+    },
+    {
+      "id": "bot/cfo",
+      "type": "grok-bot-template",
+      "title": "CFO",
+      "group": "Run",
+      "source": "chiefs/cfo/AGENT.md",
+      "docs": "docs/company/chiefs/cfo.md"
+    },
+    {
+      "id": "bot/clo",
+      "type": "grok-bot-template",
+      "title": "CLO",
+      "group": "Run",
+      "source": "chiefs/clo/AGENT.md",
+      "docs": "docs/company/chiefs/clo.md"
+    },
+    {
+      "id": "bot/chief-agent-officer",
+      "type": "grok-bot-template",
+      "title": "Chief Agent Officer",
+      "group": "Run",
+      "source": "chiefs/chief-agent-officer/AGENT.md",
+      "docs": "docs/company/chiefs/chief-agent-officer.md"
+    },
+    {
+      "id": "bot/cro",
+      "type": "grok-bot-template",
+      "title": "CRO",
+      "group": "Grow",
+      "source": "chiefs/cro/AGENT.md",
+      "docs": "docs/company/chiefs/cro.md"
+    },
+    {
+      "id": "bot/cmo",
+      "type": "grok-bot-template",
+      "title": "CMO",
+      "group": "Grow",
+      "source": "chiefs/cmo/AGENT.md",
+      "docs": "docs/company/chiefs/cmo.md"
+    },
+    {
+      "id": "bot/cco",
+      "type": "grok-bot-template",
+      "title": "CCO",
+      "group": "Grow",
+      "source": "chiefs/cco/AGENT.md",
+      "docs": "docs/company/chiefs/cco.md"
+    },
+    {
+      "id": "bot/auditor",
+      "type": "grok-bot-template",
+      "title": "Auditor",
+      "group": "Outside the chain",
+      "source": "chiefs/auditor/AGENT.md",
+      "docs": "docs/company/chiefs/auditor.md"
+    },
+    {
+      "id": "trail/0001-foundation",
+      "type": "trail-product",
+      "title": "0001-foundation",
+      "source": "trails/0001-foundation/",
+      "listed": false,
+      "note": "open; not listed until sealed by a Checker and reviewed by the Auditor"
+    }
+  ]
+}
