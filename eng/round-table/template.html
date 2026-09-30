@@ -25,6 +25,7 @@ main{max-width:56rem;margin:0 auto;padding:1rem}
 .body{white-space:pre-wrap;word-break:break-word}
 .hey{font-weight:600;margin:.4rem 0 0}
 code{background:var(--bg);padding:0 .25rem;border-radius:4px}
+body.clean header,body.clean main>p.note{display:none}
 </style>
 </head>
 <body>
@@ -88,6 +89,7 @@ $('#speed').onchange=function(){if(q.length&&q[pos]){halt();say()}};
 $('#voice').onchange=function(){try{localStorage.setItem('rt-voice',this.value)}catch(e){saved=this.value}if(q.length&&q[pos]){halt();say()}};
 if(!synth){A('button').forEach(function(b){b.disabled=true});$('#status').textContent='Speech synthesis is not available in this browser; the transcript is still readable.'}else{loadVoices();synth.onvoiceschanged=loadVoices}
 filt();
+(function(){var p;try{p=new URLSearchParams(location.search)}catch(e){return}var c=p.get('chief'),t=p.get('trail');if(c){$('#f-chief').value=c}if(t){$('#f-trail').value=t}if(c||t||p.get('clean')==='1'){document.body.classList.add('clean')}filt()})();
 })();
 </script>
 </body>
