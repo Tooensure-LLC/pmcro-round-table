@@ -138,6 +138,14 @@
       "source": "trails/0002-boundary/",
       "listed": false,
       "note": "open; not listed until sealed by a Checker and reviewed by the Auditor"
+    },
+    {
+      "id": "trail/0003-ec0002-must-fail",
+      "type": "trail-product",
+      "title": "0003-ec0002-must-fail",
+      "source": "trails/0003-ec0002-must-fail/",
+      "listed": false,
+      "note": "open; not listed until sealed by a Checker and reviewed by the Auditor"
     }
   ]
 }

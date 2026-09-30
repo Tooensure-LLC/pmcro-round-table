@@ -1,0 +1,17 @@
+{
+  "id": "0004",
+  "raw_intent": "Question one. Okay, so I was able to access an old Grok account, but it think about it, it's I have um credits. I got $71 as credits, but it's only for like the constant API. For Grok bot, I signed up for the free subscription. I'm gonna see what I can do in like a day or so. Um and go about that. Um and three, yes.",
+  "true_intent": "Shawn said yes to installing the Agent Governance Toolkit. Install it as its own change in the runtime project, after checking the current package name and version, and prove it with a build and a test. Do not adopt a preview into anything the company sells without saying so.",
+  "done_means": [
+    "the package name and version are read from the registry first (real output)",
+    "dotnet build and dotnet test pass with the package added, and fail if the reference is removed from a scratch clone",
+    "a note in docs says which parts are preview"
+  ],
+  "owners": [
+    "cto"
+  ],
+  "pace": "one loop, after 0003 is checked",
+  "status": "queued",
+  "status_note": "approved by Shawn in the 0003 reply (three, yes); not started",
+  "status_updated": "2026-09-29T20:29:56.5376586-05:00"
+}

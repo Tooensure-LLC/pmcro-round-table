@@ -1,0 +1,27 @@
+{
+  "id": "0003",
+  "raw_intent": "@cto /pmcro:seed Add a must-fail proof for EC-0002: a sample plan that routes around a platform block must be refused by the Checker. Ask Shawn for the CFO on-demand dollar ceiling and the Checker rename candidates first, and say go or no-go on installing the Agent Governance Toolkit.",
+  "true_intent": "Prove EC-0002 can fail: build a sample plan that routes around a platform block and show the Checker refuses it with HALT, while a plan on the permitted path passes. Before the work starts, get three answers from Shawn: the CFO on-demand dollar ceiling, candidate names for the Checker rename, and go or no-go on installing the Agent Governance Toolkit.",
+  "done_means": [
+    "a sample frame set contains a plan that retries a blocked platform action by another route; the Checker check refuses it with HALT and cites EC-0002 (real output)",
+    "the same sample on the permitted path (official API or account owner acting) is not refused for this reason (real output)",
+    "the proof is first shown to fail on a sample built by the same serializer that writes trails (EC-0001)",
+    "no install, no push, no law edit, no spend without Shawn"
+  ],
+  "owners": [
+    "cto",
+    "cto-checker"
+  ],
+  "pace": "one loop; after Shawn answers the three questions",
+  "needs_shawn": [
+    "CFO on-demand dollar ceiling per week and per month",
+    "candidate names for the Checker rename",
+    "go or no-go: install Agent Governance Toolkit (an install, so gated)"
+  ],
+  "status": "taken",
+  "status_note": "taken by trails/0003-ec0002-must-fail",
+  "status_updated": "2026-09-29T20:29:10.0755204-05:00",
+  "trails": [
+    "trails/0003-ec0002-must-fail"
+  ]
+}
