@@ -8,7 +8,7 @@ jobs:
   replay:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0
       - name: Replay the sealed trails this PR touches

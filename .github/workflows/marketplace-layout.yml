@@ -8,7 +8,7 @@ jobs:
   layout:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Layout tests
         shell: pwsh
         run: pwsh -NoProfile -ExecutionPolicy Bypass -File tests/marketplace/layout.tests.ps1
