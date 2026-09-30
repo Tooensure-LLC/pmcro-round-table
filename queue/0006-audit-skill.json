@@ -1,0 +1,22 @@
+{
+  "id": "0006",
+  "raw_intent": "@orchestrator /pmcro:approve everything",
+  "true_intent": "Add the Auditor audit skill (/pmcro:audit) that records an AUDIT-PASS or AUDIT-HOLD finding with the four pillars (falsifiable, grounded, challenged, cost) into trails/NNNN/audit.jsonl, making the Checker-PASS + Auditor-AUDIT-PASS listing gate already wired into tools/build.ps1 and tools/replay.ps1 usable. Additive only; no existing behaviour changes, no law change, no seat activation.",
+  "done_means": [
+    "company.json skills has an audit entry (role auditor, script scripts/audit.ps1) and tools/build.ps1 regenerates plugins/pmcro/skills/audit/SKILL.md and the AGENTS.md skill list; Test-PluginLayout RESULT PASS",
+    "plugins/pmcro/skills/audit/scripts/audit.ps1 writes trails/NNNN/audit.jsonl with the four pillars and finding in AUDIT-PASS or AUDIT-HOLD; refuses an unsealed trail, a non-PASS latest check, a finding not in the set, an absolute path (EC-0001), and refuses to overwrite (LAW-010)",
+    "a must-fail proof first shown able to fail: sealed fixture writes AUDIT-PASS, unsealed fixture refuses, finding MAYBE refuses",
+    "tools/build.ps1 stays deterministic and dotnet build and test still pass",
+    "no push, no install, no spend, no law change, no seat activation; seal waits for Shawn"
+  ],
+  "owners": [
+    "auditor",
+    "cdo"
+  ],
+  "pace": "one loop; stop at HANDOFF: CHECKER REQUIRED",
+  "status": "taken",
+  "trails": [
+    "trails/0006-audit-skill"
+  ],
+  "status_updated": "2026-09-30T06:33:55.4930516-05:00"
+}

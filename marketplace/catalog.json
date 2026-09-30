@@ -154,6 +154,14 @@
       "source": "trails/0004-round-table/",
       "listed": false,
       "note": "open; not listed until sealed by a Checker and reviewed by the Auditor"
+    },
+    {
+      "id": "trail/0006-audit-skill",
+      "type": "trail-product",
+      "title": "0006-audit-skill",
+      "source": "trails/0006-audit-skill/",
+      "listed": false,
+      "note": "open; not listed until sealed by a Checker and reviewed by the Auditor"
     }
   ]
 }

@@ -488,3 +488,10 @@ secrets/
 docs/_site/
 docs/api/
 
+
+# session scratch, archive and reference-doc mirrors (trail 0006; docs mirror the claude.ai Project)
+.pmcro/
+plugins.zip
+docs/corpus/
+docs/decisions/
+docs/sessions/

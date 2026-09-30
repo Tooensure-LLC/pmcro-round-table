@@ -17,6 +17,7 @@ The PMCR-O loop as skills (/pmcro:seed, /pmcro:loop, /pmcro:frame, /pmcro:check,
 | `/pmcro:seed` | orchestrator | Everything after the command is Shawn's words, kept verbatim as raw_intent, even when messy. Returns the new queue id (NNNN). |
 | `/pmcro:commit` | maker | Two arguments: an open trail path trails/NNNN-name, then a one-line message. Local commit only; never pushes. |
 | `/pmcro:loop` | orchestrator | One argument: a queue id (NNNN) or a queue file name. Everything else in the message is ignored. |
+| `/pmcro:audit` | auditor | Two arguments: a trail path trails/NNNN-name, then a draft JSON file with the four pillars and a finding. Auditor only; runs after seal. |
 
 | Agent | Seat | Group |
 | --- | --- | --- |
