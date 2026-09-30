@@ -1,0 +1,22 @@
+{
+  "id": "0007",
+  "raw_intent": "Board decision: resolve the seal-commit path first. Provide a loop-sanctioned way for an already Checker-PASSED Trail to persist its seal without bypassing the existing git-write boundary or rewriting prior Trail history.",
+  "true_intent": "Fix the discovered implementation gap: after a Checker PASS, seal.ps1 writes disposition.json but nothing can commit it (commit.ps1 refuses a trail that already has a disposition). Extend seal.ps1 to make one scoped, append-only, local commit of the seal (disposition.json plus any not-yet-committed frames of the same trail), never a push and never a modification of a prior committed frame. Implementation-gap only; no new sealing/replay/ACCEPT/LOOP semantics, no law/policy change, no seat authority change.",
+  "done_means": [
+    "seal.ps1, after writing disposition.json, makes one local commit scoped to the trail; it stages only files under trails/NNNN-name, refuses if any staged change modifies a tracked trail file (Append-Only, LAW-010), refuses an absolute path (EC-0001), refuses unexpected staged changes outside the trail, and never pushes",
+    "proven able to fail on a fixture repo (real output): a normal seal commits disposition.json (exit 0); a modified prior frame is refused; an absolute path in a staged trail file is refused; a staged change outside the trail is refused",
+    "no company.json change, no law/policy change, no seat activation, no push, no install, no spend; Append-Only and Checker independence preserved",
+    "tools/build.ps1 stays deterministic and dotnet build and test still pass",
+    "do not use the new path on trails/0006 or claim AUDIT-PASS end to end; stop and report after the independent Checker"
+  ],
+  "owners": [
+    "cdo",
+    "cto"
+  ],
+  "pace": "one loop; stop at HANDOFF: CHECKER REQUIRED, then report",
+  "status": "taken",
+  "trails": [
+    "trails/0007-seal-commit-gap"
+  ],
+  "status_updated": "2026-09-30T06:57:13.5785501-05:00"
+}

@@ -68,6 +68,7 @@ Every change to this company is a trail. Trails are append-only and use relative
 | `trails/0003-ec0002-must-fail/` | OPEN (not sealed) | 00-frame.jsonl, 01-plan.jsonl, 02-make.jsonl, 03-plan.jsonl, 04-make.jsonl |
 | `trails/0004-round-table/` | OPEN (not sealed) | 00-frame.jsonl, 01-plan.jsonl, 02-make.jsonl, 03-make.jsonl, 04-make.jsonl, 05-make.jsonl |
 | `trails/0006-audit-skill/` | OPEN (not sealed) | 00-frame.jsonl, 01-plan.jsonl, 02-make.jsonl, 03-check.jsonl, 04-reflect.jsonl |
+| `trails/0007-seal-commit-gap/` | OPEN (not sealed) | 00-frame.jsonl, 01-plan.jsonl, 02-make.jsonl |
 
 ## The company drive
 

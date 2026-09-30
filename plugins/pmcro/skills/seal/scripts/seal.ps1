@@ -71,4 +71,22 @@ if ($d.disposition -eq 'ACCEPT') { Assert-CosHandoffStub $d.cos_handoff }
 $line = [pscustomobject]$d | ConvertTo-Json -Compress -Depth 6
 if ($line -match $pat) { throw 'EC-0001: absolute path in disposition' }
 [IO.File]::WriteAllText($out, $line + "`n", (New-Object System.Text.UTF8Encoding($true)))
-"EC-0001 scan: control=$control hits=0; sealed $Trail with $($hashes.Count) file hashes; cos_handoff stub status=$($cosHandoff.status)"
+# Persist the seal with one loop-sanctioned local commit, scoped to this trail. Roll back the disposition if it cannot be committed cleanly. Never push; never rewrite a prior frame.
+. (Join-Path $PSScriptRoot '..\..\frame\scripts\Test-TrailPaths.ps1')
+$g = @('-C', $Root)
+function Fail-Seal([string]$why) { git @g reset -q 2>$null | Out-Null; Remove-Item -Force -ErrorAction SilentlyContinue $out; throw "seal-commit refused: $why" }
+git @g add -- $Trail | Out-Null
+$outside = @(git @g diff --cached --name-only | Where-Object { $_ -notlike "$trailRel/*" })
+if ($outside.Count) { Fail-Seal "staged changes outside ${trailRel}: $($outside -join ', ')" }
+$modified = @(git @g diff --cached --name-only --diff-filter=M -- $Trail)
+if ($modified.Count) { Fail-Seal "would modify a tracked trail file (Append-Only, LAW-010): $($modified -join ', ')" }
+Assert-TrailPathScanWorks
+$staged = @(git @g diff --cached --name-only --diff-filter=ACR -- $Trail)
+$hits = @(foreach ($f in $staged) { $h = @(Get-TrailPathHits -Text (Get-Content -Raw -LiteralPath (Join-Path $Root $f))); if ($h.Count) { "$f ($($h -join '; '))" } })
+if ($hits.Count) { Fail-Seal "absolute path in staged trail file(s): $($hits -join ', ')" }
+if (-not (git @g diff --cached --name-only)) { Fail-Seal 'nothing to commit' }
+$sid = ($trailRel -split '/')[1].Substring(0, 4)
+git @g commit -q -m "trail ${sid}: seal (disposition ACCEPT)" -m "Trail: $trailRel"
+if ($LASTEXITCODE) { Fail-Seal 'git commit failed' }
+$sealCommit = (git @g rev-parse --short HEAD)
+"EC-0001 scan: control=$control hits=0; sealed $Trail with $($hashes.Count) file hashes; committed $sealCommit (scoped, no push); cos_handoff stub status=$($cosHandoff.status)"

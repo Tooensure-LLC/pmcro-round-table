@@ -162,6 +162,14 @@
       "source": "trails/0006-audit-skill/",
       "listed": false,
       "note": "open; not listed until sealed by a Checker and reviewed by the Auditor"
+    },
+    {
+      "id": "trail/0007-seal-commit-gap",
+      "type": "trail-product",
+      "title": "0007-seal-commit-gap",
+      "source": "trails/0007-seal-commit-gap/",
+      "listed": false,
+      "note": "open; not listed until sealed by a Checker and reviewed by the Auditor"
     }
   ]
 }
