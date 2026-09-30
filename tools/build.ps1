@@ -146,8 +146,8 @@ foreach ($t in $trails) {
 $cat = [ordered]@{ marketplace = $c.company; version = $c.version; generated_from = 'company.json'; items = $items }
 Out-File2 'marketplace/catalog.json' (($cat | ConvertTo-Json -Depth 6) + $nl)
 
-# 4. Agent folder layout (trails/0005-pmcro-skeleton): AGENTS.md for every host, CLAUDE.md -> @AGENTS.md, and .pmcro/ for PMCR-O's own parts.
-#    The skills themselves are plugins/pmcro/skills (section 5; trails/0010-pmcro-plugin-self-contained).
+# 4. Agent folder layout (old-repo trails/0005-pmcro-skeleton): AGENTS.md for every host, CLAUDE.md -> @AGENTS.md, and .pmcro/ for PMCR-O's own parts.
+#    The skills themselves are plugins/pmcro/skills (section 5; old-repo trails/0010-pmcro-plugin-self-contained).
 $skillRows = ($c.skills | ForEach-Object { "- ``/pmcro:$($_.id)`` ($($_.role)): $($_.description)" }) -join $nl
 $roleRows = ($c.roles | ForEach-Object { "- **$($_.name)** ($($_.pattern)): $($_.contract)" }) -join $nl
 Out-File2 'AGENTS.md' @"
@@ -194,7 +194,7 @@ $skillRows
 Always ask Shawn first: $ask.
 "@
 Out-File2 'CLAUDE.md' "@AGENTS.md$nl$nl$gen$nl"
-# .agents/skills is no longer generated (trails/0010-pmcro-plugin-self-contained): the skills and their scripts live in plugins/pmcro.
+# .agents/skills is no longer generated (old-repo trails/0010-pmcro-plugin-self-contained): the skills and their scripts live in plugins/pmcro.
 Out-File2 '.claude/output-styles/pmcro.md' @"
 ---
 name: '$($c.output_style.name)'
@@ -231,19 +231,22 @@ $roleRows
 foreach ($r in $c.roles) { Out-File2 "src/Pmcro.Runtime/Roles/$($r.id).md" "$gen$nl# $($r.name)$nl${nl}Pattern: $($r.pattern)$nl$nl$($r.contract)$nl" }
 # Hooks, exported to the hosts that read them (company.json hooks[].event before_edit = Claude Code PreToolUse Edit|Write).
 $pre = @($c.hooks | Where-Object { $_.event -eq 'before_edit' })
-$hookEntry = { param([string]$cmdPrefix) @(@{ matcher = 'Edit|Write|MultiEdit|NotebookEdit'; hooks = @($pre | ForEach-Object { [ordered]@{ type = 'command'; command = ($_.command -replace 'plugins/pmcro/', $cmdPrefix); timeout = 30 } }) }) }
+# [ordered]: a plain @{} hashtable has no stable key order, which made these two files differ between runs (trails/0001 02-check D1).
+# Exec form (command + args, no shell) per code.claude.com/docs/en/hooks, so the path placeholder works on Windows
+# whether Claude Code would pick Git Bash or PowerShell; the script path is anchored on the project or plugin root.
+$hookEntry = { param([string]$scriptPrefix) @([ordered]@{ matcher = 'Edit|Write|MultiEdit|NotebookEdit'; hooks = @($pre | ForEach-Object { [ordered]@{ type = 'command'; command = $_.executable; args = @($_.args) + @($_.script.Replace('plugins/pmcro/', $scriptPrefix)); timeout = 30 } }) }) }
 $settings = [ordered]@{
   '$schema' = 'https://json.schemastore.org/claude-code-settings.json'
   permissions = [ordered]@{
     deny = @('Read(./.env)', 'Read(./.env.*)', 'Read(./secrets/**)', 'Bash(git push:*)')
     ask  = @('Bash(dotnet tool install:*)', 'Bash(dotnet new install:*)', 'Bash(winget:*)', 'Bash(gh repo create:*)')
   }
-  hooks = [ordered]@{ PreToolUse = @(& $hookEntry 'plugins/pmcro/') }
+  hooks = [ordered]@{ PreToolUse = @(& $hookEntry '${CLAUDE_PROJECT_DIR}/plugins/pmcro/') }
 }
 Out-File2 '.claude/settings.json' (($settings | ConvertTo-Json -Depth 8) + $nl)
 Out-File2 'plugins/pmcro/hooks/hooks.json' (([ordered]@{ hooks = [ordered]@{ PreToolUse = @(& $hookEntry '${CLAUDE_PLUGIN_ROOT}/') } } | ConvertTo-Json -Depth 8) + $nl)
 
-# 5. Plugin marketplace in the dotnet/skills layout (trails/0008-skill-author-docker-github-plugins).
+# 5. Plugin marketplace in the dotnet/skills layout (old-repo trails/0008-skill-author-docker-github-plugins).
 #    plugins/pmcro is generated here from company.json: skills = company.json skills (/pmcro:<id>), agents = the seats (@<bot-id>).
 #    The other plugins/pmcro-* folders are hand-authored; the three host marketplace.json files list every plugins/*/plugin.json.
 $m = $c.marketplace

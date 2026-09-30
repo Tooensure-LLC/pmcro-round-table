@@ -1,0 +1,14 @@
+{
+  "id": "0001",
+  "raw_intent": "Yeah see that project was off.... should lets for instance think of https://code.claude.com/docs/en/claude-directory#explore-the-directory. Noite we build off others never reinvent  the wheel.  and or [.agents Protocol â€” The Open Standard for AI Agent Configuration](https://dotagentsprotocol.com/). Understand Everything suppose to be generic template driven declarative design Note sure were everone heading is it Plugin Marketplace  or  shou;d I first start of also remember MAF agent skill types harness codeact servier ligt etc. ad remmeber where coping if tit work for them then itsll worjk for use. yes we're using grok bot but yet how would we or can we build the same using our run time etc. Now understand also use my cumputer create a dev drive and build on it the currect way || No becasuse I feel its not structured we can better reimplement same but in U: || continue and note thaqt meaan you should as building catch the workflows templaing etc github markteplaing etc  there should be lots of projects following LLM conebvtion with context foles etc also can use claude , grok docs etc figuring how we should create / copy design etc hooks etc full profduction ready. and also remember i like for for instance if yhou make ac commit that type functionallytiy is part of the systenm already type theing and also make sure github documentation with .net docfx etc hatever begin use coworker if needed",
+  "true_intent": "Re-implement the PMCR-O company on the U: Dev Drive as one structured repo on host conventions, so the same seats and skills run in Grok Bot, Claude Code and the MAF runtime.",
+  "owners": [
+    "cto"
+  ],
+  "status": "taken",
+  "trails": [
+    "trails/0001-foundation"
+  ],
+  "status_note": "queue created in loop 2 (02-check L3) after the trail opened",
+  "status_updated": "2026-09-29T18:10:45.2969861-05:00"
+}

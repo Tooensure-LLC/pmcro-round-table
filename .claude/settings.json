@@ -21,7 +21,14 @@
         "hooks": [
           {
             "type": "command",
-            "command": "pwsh -NoProfile -ExecutionPolicy Bypass -File plugins/pmcro/skills/frame/scripts/require-open-trail.ps1",
+            "command": "pwsh",
+            "args": [
+              "-NoProfile",
+              "-ExecutionPolicy",
+              "Bypass",
+              "-File",
+              "${CLAUDE_PROJECT_DIR}/plugins/pmcro/skills/frame/scripts/require-open-trail.ps1"
+            ],
             "timeout": 30
           }
         ]

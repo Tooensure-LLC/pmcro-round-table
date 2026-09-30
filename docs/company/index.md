@@ -52,7 +52,7 @@ Orchestrator > Planner > Maker > Checker > Reflector. The Checker is always a se
 
 ## Earned constraints
 
-- **EC-0001** (trails/0001-company-founding): Before writing any trail frame, scan its text for absolute paths with a check first proven able to fail on a sample built by the same serializer that writes the trail.
+- **EC-0001** (old-repo trails/0001-company-founding): Before writing any trail frame, scan its text for absolute paths with a check first proven able to fail on a sample built by the same serializer that writes the trail.
 
 Always ask Shawn first: anything irreversible, deleting, installing, git pushes, and git writes other than the local commit the loop skill makes (Shawn, 2026-09-29), changing laws or policy, spending, giving any bot more authority.
 
@@ -62,7 +62,7 @@ Every change to this company is a trail. Trails are append-only and use relative
 
 | Trail | State | Files |
 | --- | --- | --- |
-| `trails/0001-foundation/` | OPEN (not sealed) | 00-frame.jsonl, 01-make.jsonl |
+| `trails/0001-foundation/` | OPEN (not sealed) | 00-frame.jsonl, 01-make.jsonl, 02-check.jsonl, 03-reflect.jsonl, 04-plan.jsonl, 05-make.jsonl, 06-make.jsonl |
 
 ## The company drive
 

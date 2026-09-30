@@ -11,7 +11,7 @@ param(
   [string]$HandTo = 'chief-of-staff'
 )
 $ErrorActionPreference = 'Stop'
-# Root = the folder you run from (the repo root), not where this file sits (trails/0010-pmcro-plugin-self-contained).
+# Root = the folder you run from (the repo root), not where this file sits (old-repo trails/0010-pmcro-plugin-self-contained).
 if (-not $Root) { $Root = (Get-Location).Path }
 if (-not (Test-Path (Join-Path $Root '.git'))) { throw 'seal: run from the repo root (no .git in the current folder)' }
 if ([IO.Path]::IsPathRooted($Trail) -or ($Trail -notmatch '^trails[\\/][^\\/]+$')) { throw "seal: -Trail must be relative, like trails/NNNN-name; got: $Trail" }

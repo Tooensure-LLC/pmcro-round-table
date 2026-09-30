@@ -1,4 +1,4 @@
-# Test-PluginLayout.ps1 - check the plugin marketplace against the dotnet/skills layout (trails/0008-skill-author-docker-github-plugins).
+# Test-PluginLayout.ps1 - check the plugin marketplace against the dotnet/skills layout (old-repo trails/0008-skill-author-docker-github-plugins).
 # Usage (repo root): powershell -NoProfile -ExecutionPolicy Bypass -File eng/skill-validator/Test-PluginLayout.ps1 [-Root <copy>]
 # Exit 0 = PASS, 1 = FAIL (one FAIL line per fault). Read-only.
 param([string]$Root = (Split-Path -Parent (Split-Path -Parent $PSScriptRoot)))
@@ -29,7 +29,7 @@ if ($stray.Count) { Fail "plugin folders not named pmcro or pmcro-*: $($stray -j
 if ($expected.Count -ne 5) { Fail "expected exactly 5 pmcro plugins, found $($expected.Count): $($expected -join ', ')" } else { Ok "5 plugins: $($expected -join ', ')" }
 
 # 1. Every host marketplace parses, has the reference fields, and lists exactly the plugin folders
-$hosts = [ordered]@{ '.claude-plugin/marketplace.json' = $null; '.agents/plugins/marketplace.json' = 'interface.displayName'; '.cursor-plugin/marketplace.json' = 'metadata.description' }
+$hosts = [ordered]@{ '.claude-plugin/marketplace.json' = $null; '.agents/plugins/marketplace.json' = 'interface.displayName'; '.cursor-plugin/marketplace.json' = 'metadata.description'; '.github/plugin/marketplace.json' = 'metadata.description' }
 foreach ($h in $hosts.Keys) {
   $hb = $fails
   $mj = J $h
@@ -85,6 +85,24 @@ foreach ($p in $expected) {
     elseif ($n -ne $s.Name) { Fail "$d/skills/$($s.Name)/SKILL.md name '$n' does not match its folder '$($s.Name)'" }
   }
   if ($fails -eq $before) { Ok "$d ($($skills.Count) skills, $($agents.Count) agents)" }
+}
+
+# 3. Claude Code hooks (trails/0001 02-check D5): PreToolUse is an array of { matcher, hooks[] }, each hook exec form
+#    (command + args) whose script argument is anchored on a root placeholder, so it cannot fail open from a subfolder.
+foreach ($pair in @(@('.claude/settings.json', '${CLAUDE_PROJECT_DIR}/'), @('plugins/pmcro/hooks/hooks.json', '${CLAUDE_PLUGIN_ROOT}/'))) {
+  $hb = $fails
+  $hj = J $pair[0]; if (-not $hj) { continue }
+  $raw = Get-Content -Raw -LiteralPath (Join-Path $Root $pair[0])
+  if ($raw -notmatch '"PreToolUse"\s*:\s*\[') { Fail "$($pair[0]) hooks.PreToolUse is not an array" }
+  foreach ($e in @($hj.hooks.PreToolUse)) {
+    if (-not $e.matcher) { Fail "$($pair[0]) PreToolUse entry has no matcher" }
+    foreach ($h in @($e.hooks)) {
+      if ($h.type -ne 'command' -or -not $h.command) { Fail "$($pair[0]) hook is not a command hook" }
+      if (-not @($h.args).Count) { Fail "$($pair[0]) hook '$($h.command)' is not exec form (no args)" }
+      elseif (-not (@($h.args) | Where-Object { $_ -like "$($pair[1])*" })) { Fail "$($pair[0]) hook args are not anchored on $($pair[1])" }
+    }
+  }
+  if ($fails -eq $hb) { Ok "$($pair[0]) hooks" }
 }
 
 if ($fails -gt 0) { Write-Host "RESULT FAIL ($fails)"; exit 1 }

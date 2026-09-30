@@ -1,10 +1,12 @@
 # replay.ps1 - re-verify a trail on this machine. Prints MATCH or MISMATCH; exit 0 or 1.
-# Usage: powershell -ExecutionPolicy Bypass -File tools/replay.ps1 trails/0001-company-founding
+# Usage: powershell -ExecutionPolicy Bypass -File tools/replay.ps1 old-repo trails/0001-company-founding
 # Read-only except for re-running tools/build.ps1, which rewrites generated files from company.json.
-# v2 (trails/0004-replay-v2): also fails when a sealed trail file changed, or when trails/ or queue/ differ from the commit.
+# v2 (old-repo trails/0004-replay-v2): also fails when a sealed trail file changed, or when trails/ or queue/ differ from the commit.
 param([Parameter(Mandatory = $true)][string]$Trail)
 $ErrorActionPreference = 'Stop'
 $root = Split-Path -Parent $PSScriptRoot
+$ps = (Get-Process -Id $PID).Path  # rebuild with the same PowerShell that runs replay (trails/0001 02-check D2)
+. (Join-Path $root 'plugins/pmcro/skills/frame/scripts/Test-TrailPaths.ps1')
 $td = Join-Path $root $Trail
 $safe = ($root -replace '\\', '/')
 $g = @('-c', "safe.directory=$safe", '-C', $root)
@@ -17,13 +19,13 @@ $exists = Test-Path $td
 Add-Check 'trail exists' $exists $Trail
 if ($exists) {
   # 2. Relative paths only, with a positive control (EC-0001)
-  $pat = '[A-Za-z]:(\\\\|\\|/)[A-Za-z]'
-  $control = ((@{ x = 'E:\PMCRO' } | ConvertTo-Json -Compress) -match $pat)
+  # Shared scan (plugins/pmcro/skills/frame/scripts/Test-TrailPaths.ps1); throws if its own controls fail.
+  $control = $true; try { Assert-TrailPathScanWorks } catch { $control = $false }
   $files = @(Get-ChildItem $td -File | Where-Object { $_.Extension -in '.jsonl', '.json' })
   $disp = Join-Path $td 'disposition.json'
   $defects = @()
   if (Test-Path $disp) { $d = Get-Content -Raw $disp | ConvertFrom-Json; if ($d.recorded_defects) { $defects = @($d.recorded_defects) } }
-  $hits = @($files | Where-Object { $defects -notcontains $_.Name } | Select-String -Pattern $pat)
+  $hits = @($files | Where-Object { $defects -notcontains $_.Name } | Where-Object { @(Get-TrailPathHits -Text (Get-Content -Raw $_.FullName)).Count })
   Add-Check 'no absolute paths' ($control -and $hits.Count -eq 0) "scan can fail: $control; hits outside recorded defects: $($hits.Count); recorded defects: $($defects -join ', ')"
 
   # 3. Sealed ACCEPT
@@ -42,17 +44,23 @@ if ($exists) {
 
   # 6. Template replay: company.json + tools/build.ps1 reproduce the committed files, byte for byte
   $build = Join-Path $root 'tools\build.ps1'
-  $out = @('chiefs', 'docs', 'marketplace', 'AGENTS.md', 'CLAUDE.md', '.agents', '.pmcro', 'plugins/pmcro', '.claude-plugin', '.cursor-plugin')
+  $out = @('chiefs', 'docs/company', 'marketplace', 'AGENTS.md', 'CLAUDE.md', '.agents/plugins', '.claude', 'plugins/pmcro', '.claude-plugin', '.cursor-plugin', '.github/plugin', 'src/Pmcro.Runtime/Roles')
+  $out = @($out | Where-Object { Test-Path (Join-Path $root $_) })
+  $cleanBefore = @(git @g ls-files -- $out)
+  $dirtyBefore = @(git @g status --porcelain -- $out | ForEach-Object { $_.Substring(3) })
   # .pmcro/local is gitignored scratch: never part of the guarantee (trails/0005: scratch writes during a replay made it non-deterministic)
   # trails/0008 loop 2: match .pmcro/local only at this root, so replay also works from a checkout that itself sits under some .pmcro/local
   $scratch = (Join-Path $root '.pmcro\local') + '\'
   $hash = { Get-ChildItem ($out | ForEach-Object { Join-Path $root $_ }) -Recurse -File | Where-Object { -not $_.FullName.StartsWith($scratch, [StringComparison]::OrdinalIgnoreCase) } | Sort-Object FullName | Get-FileHash | ForEach-Object Hash }
-  & powershell -NoProfile -ExecutionPolicy Bypass -File $build | Out-Null; $h1 = & $hash
-  & powershell -NoProfile -ExecutionPolicy Bypass -File $build | Out-Null; $h2 = & $hash
+  & $ps -NoProfile -ExecutionPolicy Bypass -File $build | Out-Null; $h1 = & $hash
+  & $ps -NoProfile -ExecutionPolicy Bypass -File $build | Out-Null; $h2 = & $hash
   $deterministic = ((Compare-Object $h1 $h2) -eq $null)
   # v2: trails and queue are part of the committed state a buyer replays
   # trails/0008: hand-authored plugins and eng/ tooling are part of the committed state too
   $dirty = @(git @g status --porcelain -- company.json tools $out trails queue plugins eng 2>$null)
+  # Replay is read-only: put back any committed generated file that only this rebuild changed.
+  $touched = @(git @g status --porcelain -- $out | ForEach-Object { $_.Substring(3) } | Where-Object { $dirtyBefore -notcontains $_ -and $cleanBefore -contains $_ })
+  if ($touched.Count) { git @g checkout -- $touched 2>$null }
   Add-Check 'committed state replays exactly' ($deterministic -and $dirty.Count -eq 0) "deterministic: $deterministic; files differing from the commit (company.json, tools, generated, trails, queue, plugins, eng): $($dirty.Count) $(($dirty | ForEach-Object { $_.Trim() }) -join '; ')"
 
   # 7. v2: every file hashed at sealing still matches (disposition.file_hashes_at_seal, where present).
@@ -81,7 +89,7 @@ if ($exists) {
   # 8. trails/0012: every queue item's status agrees with the trails (tools/check-queue.ps1)
   $cq = Join-Path $root 'tools\check-queue.ps1'
   if (Test-Path $cq) {
-    $qo = @(& powershell -NoProfile -ExecutionPolicy Bypass -File $cq -Root $root)
+    $qo = @(& $ps -NoProfile -ExecutionPolicy Bypass -File $cq -Root $root)
     $qok = ($LASTEXITCODE -eq 0)
     Add-Check 'queue consistent' $qok ("$($qo | Select-Object -Last 1) $((@($qo | Where-Object { $_ -like 'FAIL*' }) | Select-Object -First 2) -join '; ')").Trim()
   }

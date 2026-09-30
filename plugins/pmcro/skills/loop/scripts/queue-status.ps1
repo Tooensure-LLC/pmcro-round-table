@@ -1,5 +1,5 @@
-# queue-status.ps1 - move one queue item to a new status (trails/0012-queue-lifecycle). Run from the repo root.
-# Usage: powershell -File <plugin>/skills/loop/scripts/queue-status.ps1 -Id 0020 -Status taken -Trail trails/0012-queue-lifecycle
+# queue-status.ps1 - move one queue item to a new status (old-repo trails/0012-queue-lifecycle). Run from the repo root.
+# Usage: powershell -File <plugin>/skills/loop/scripts/queue-status.ps1 -Id 0020 -Status taken -Trail old-repo trails/0012-queue-lifecycle
 #        ... -Status partly_done -Trail trails/NNNN-name -Remaining "what is left"   |   ... -Status dropped -Reason "why"
 # Refuses: an unknown status; taken/partly_done/done without a trail; partly_done/done for a trail that is not sealed ACCEPT;
 # moving a done item anywhere; moving an item that lists trails back to queued. Runs tools/check-queue.ps1 after, when present.
@@ -43,12 +43,12 @@ if ($Remaining) { SetProp 'remaining' $Remaining }
 if ($Reason) { SetProp 'dropped_reason' $Reason }
 if ($Note) { SetProp 'status_note' $Note }
 SetProp 'status_updated' (Get-Date).ToString('o')
-[IO.File]::WriteAllText($f.FullName, ($q | ConvertTo-Json -Depth 6), (New-Object System.Text.UTF8Encoding($true)))
+[IO.File]::WriteAllText($f.FullName, ($q | ConvertTo-Json -Depth 6), (New-Object System.Text.UTF8Encoding($false)))
 $check = Join-Path $root 'tools/check-queue.ps1'
 if (Test-Path $check) {
-  $o = & powershell -NoProfile -ExecutionPolicy Bypass -File $check -Root $root
+  $o = & (Get-Process -Id $PID).Path -NoProfile -ExecutionPolicy Bypass -File $check -Root $root
   if ($LASTEXITCODE -ne 0) {
-    [IO.File]::WriteAllText($f.FullName, $before, (New-Object System.Text.UTF8Encoding($true)))
+    [IO.File]::WriteAllText($f.FullName, $before, (New-Object System.Text.UTF8Encoding($false)))
     $o | Where-Object { $_ -like 'FAIL*' } | Select-Object -First 5 | ForEach-Object { [Console]::Error.WriteLine($_) }
     throw "queue-status: check-queue failed after the move; $($f.BaseName) restored"
   }
