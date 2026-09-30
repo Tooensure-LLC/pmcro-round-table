@@ -66,7 +66,7 @@ Every change to this company is a trail. Trails are append-only and use relative
 | `trails/0001-foundation/` | OPEN (not sealed) | 00-frame.jsonl, 01-make.jsonl, 02-check.jsonl, 03-reflect.jsonl, 04-plan.jsonl, 05-make.jsonl, 06-make.jsonl |
 | `trails/0002-boundary/` | OPEN (not sealed) | 00-frame.jsonl, 01-make.jsonl |
 | `trails/0003-ec0002-must-fail/` | OPEN (not sealed) | 00-frame.jsonl, 01-plan.jsonl, 02-make.jsonl, 03-plan.jsonl, 04-make.jsonl |
-| `trails/0004-round-table/` | OPEN (not sealed) | 00-frame.jsonl, 01-plan.jsonl, 02-make.jsonl |
+| `trails/0004-round-table/` | OPEN (not sealed) | 00-frame.jsonl, 01-plan.jsonl, 02-make.jsonl, 03-make.jsonl |
 
 ## The company drive
 

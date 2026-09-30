@@ -29,7 +29,7 @@ function Get-Faults($x) {
     if ($c.Success -and $h -notmatch [regex]::Escape("<option value=`"$($c.Groups[1].Value)`"")) { $f.Add('FILTER: block Chief missing from the Chief filter') }
     if ($t.Success -and $h -notmatch [regex]::Escape("<option value=`"$($t.Groups[1].Value)`"")) { $f.Add('FILTER: block trail missing from the trail filter') }
   }
-  foreach ($id in 'play-all', 'pause', 'skip', 'stop', 'speed', 'f-chief', 'f-trail') { if ($h -notmatch "id=`"$id`"") { $f.Add("CONTROLS: no #$id") } }
+  foreach ($id in 'play-all', 'pause', 'skip', 'stop', 'speed', 'voice', 'f-chief', 'f-trail') { if ($h -notmatch "id=`"$id`"") { $f.Add("CONTROLS: no #$id") } }
   if ($h -notmatch 'speechSynthesis' -or $h -notmatch 'SpeechSynthesisUtterance') { $f.Add('CONTROLS: no built-in speech synthesis') }
   foreach ($m in [regex]::Matches($h, '(?i)\b(href|src|action|formaction|poster|srcset|cite|background)\s*=\s*["'']([^"'']*)["'']')) { if ($m.Groups[2].Value.Trim() -match $absRe) { $f.Add("ABSOLUTE: $($m.Groups[1].Value)=$($m.Groups[2].Value)") } }
   $code = (@([regex]::Matches($h, '(?is)<(script|style)\b[^>]*>(.*?)</\1>') | ForEach-Object { $_.Groups[2].Value })) -join "`n"
@@ -38,14 +38,15 @@ function Get-Faults($x) {
   if ($h -ne $x.fresh) { $f.Add('DRIFT: the page differs from a fresh build of its source') }
   $res = @((($x.dx | ConvertFrom-Json -Depth 32).build.resource) | ForEach-Object { $_.files })
   if ($res -notcontains 'round-table.html') { $f.Add('DOCFX: docs/docfx.json has no resource entry for round-table.html') }
-  if ($x.toc -notmatch '(?m)^\s*href:\s*round-table\.md\s*$') { $f.Add('DOCFX: docs/toc.yml has no round-table.md entry') }
-  if ($x.md -notmatch 'round-table\.html') { $f.Add('DOCFX: docs/round-table.md does not point at the page') }
-  foreach ($m in [regex]::Matches($x.md, '\]\(([^)]*)\)|(?i)(?:src|href)\s*=\s*"([^"]*)"')) { $v = if ($m.Groups[1].Success) { $m.Groups[1].Value } else { $m.Groups[2].Value }; if ($v -match $absRe) { $f.Add("ABSOLUTE: docs/round-table.md links $v") } }
+  if ($x.toc -notmatch '(?m)^\s*href:\s*round-table-view\.md\s*$') { $f.Add('DOCFX: docs/toc.yml has no round-table-view.md entry') }
+  if ($x.dup) { $f.Add('DOCFX: docs/round-table.md would build to round-table.html and collide with the page (DuplicateOutputFiles)') }
+  if ($x.md -notmatch 'round-table\.html') { $f.Add('DOCFX: docs/round-table-view.md does not point at the page') }
+  foreach ($m in [regex]::Matches($x.md, '\]\(([^)]*)\)|(?i)(?:src|href)\s*=\s*"([^"]*)"')) { $v = if ($m.Groups[1].Success) { $m.Groups[1].Value } else { $m.Groups[2].Value }; if ($v -match $absRe) { $f.Add("ABSOLUTE: docs/round-table-view.md links $v") } }
   $f.ToArray()
 }
 
 & pwsh -NoProfile -File (Join-Path $PSScriptRoot 'Build-RoundTable.ps1') -Out '.local/rt-fresh.html' | Out-Null
-$base = @{ h = (Read-Text 'docs/round-table.html'); dx = (Read-Text 'docs/docfx.json'); toc = (Read-Text 'docs/toc.yml'); md = (Read-Text 'docs/round-table.md'); fresh = (Read-Text '.local/rt-fresh.html'); n = @(((Read-Text 'eng/round-table/transcript.json') | ConvertFrom-Json -Depth 8).blocks).Count }
+$base = @{ dup = (Test-Path 'docs/round-table.md'); h = (Read-Text 'docs/round-table.html'); dx = (Read-Text 'docs/docfx.json'); toc = (Read-Text 'docs/toc.yml'); md = (Read-Text 'docs/round-table-view.md'); fresh = (Read-Text '.local/rt-fresh.html'); n = @(((Read-Text 'eng/round-table/transcript.json') | ConvertFrom-Json -Depth 8).blocks).Count }
 $art = '(?s)<article class="blk".*?</article>\n'
 $muts = @(
   @('block without heading (speaker missing)', 'SPEAKER', { $args[0].h = (R1 $args[0].h '<h2 class="who">[^<]*</h2>' '') }),
@@ -60,10 +61,12 @@ $muts = @(
   @('block dropped', 'COMPLETE', { $args[0].h = (R1 $args[0].h $art '') }),
   @('Play button removed from a block', 'CONTROLS', { $args[0].h = $args[0].h.Replace('<button class="play" type="button">Play</button>', '') }),
   @('speed control removed', 'CONTROLS', { $args[0].h = $args[0].h.Replace('id="speed"', 'id="spd"') }),
+  @('voice chooser removed', 'CONTROLS', { $args[0].h = $args[0].h.Replace('id="voice"', 'id="vc"') }),
   @('trail with no folder', 'TRAIL', { $args[0].h = (R1 $args[0].h 'data-trail="[^"]*"' 'data-trail="9999-nope"') }),
   @('hand edit of the page', 'DRIFT', { $args[0].h = $args[0].h + '<!-- edit -->' }),
   @('docfx resource entry missing', 'DOCFX', { $args[0].dx = $args[0].dx.Replace('round-table.html', 'x.html') }),
-  @('toc entry missing', 'DOCFX', { $args[0].toc = $args[0].toc.Replace('round-table.md', 'x.md') })
+  @('wrapper md named like the page', 'DOCFX', { $args[0].dup = $true }),
+  @('toc entry missing', 'DOCFX', { $args[0].toc = $args[0].toc.Replace('round-table-view.md', 'x.md') })
 )
 $missed = 0
 foreach ($m in $muts) {
