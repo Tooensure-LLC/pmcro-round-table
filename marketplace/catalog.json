@@ -130,6 +130,14 @@
       "source": "trails/0001-foundation/",
       "listed": false,
       "note": "open; not listed until sealed by a Checker and reviewed by the Auditor"
+    },
+    {
+      "id": "trail/0002-boundary",
+      "type": "trail-product",
+      "title": "0002-boundary",
+      "source": "trails/0002-boundary/",
+      "listed": false,
+      "note": "open; not listed until sealed by a Checker and reviewed by the Auditor"
     }
   ]
 }

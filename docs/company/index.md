@@ -53,6 +53,7 @@ Orchestrator > Planner > Maker > Checker > Reflector. The Checker is always a se
 ## Earned constraints
 
 - **EC-0001** (old-repo trails/0001-company-founding): Before writing any trail frame, scan its text for absolute paths with a check first proven able to fail on a sample built by the same serializer that writes the trail.
+- **EC-0002** (trails/0002-boundary (candidate CC-0001-BOUNDARY from trails/0001-foundation/03-reflect.jsonl; policy approved by Shawn 2026-09-29)): A block by a platform control (bot detection, rate limit, terms of service) is a boundary, not an obstacle. A platform's own policy is a validated resource in the baseline, so the Planner plans only inside it. On a block the Checker gives HALT, the Reflector records the policy and a permitted path (the official API, the account owner acting, or a different goal), and the Orchestrator returns ESCALATE or INTERRUPT. The loop never learns to look more human to get past a control. A trail product names its permitted path and ships its boundary constraints so the buyer, who is bound by the platform's terms once they inject their own account, sees them before the first run. The rule holds on every host: Grok Bot, Claude computer use and the company runtime.
 
 Always ask Shawn first: anything irreversible, deleting, installing, git pushes, and git writes other than the local commit the loop skill makes (Shawn, 2026-09-29), changing laws or policy, spending, giving any bot more authority.
 
@@ -63,6 +64,7 @@ Every change to this company is a trail. Trails are append-only and use relative
 | Trail | State | Files |
 | --- | --- | --- |
 | `trails/0001-foundation/` | OPEN (not sealed) | 00-frame.jsonl, 01-make.jsonl, 02-check.jsonl, 03-reflect.jsonl, 04-plan.jsonl, 05-make.jsonl, 06-make.jsonl |
+| `trails/0002-boundary/` | OPEN (not sealed) | 00-frame.jsonl, 01-make.jsonl |
 
 ## The company drive
 

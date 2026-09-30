@@ -1,0 +1,14 @@
+{
+  "id": "0002",
+  "raw_intent": "/pmcro:approved go",
+  "true_intent": "Promote CC-0001-BOUNDARY (approved by Shawn) to earned constraint EC-0002 in company.json and regenerate the host files.",
+  "owners": [
+    "cto"
+  ],
+  "status": "taken",
+  "trails": [
+    "trails/0002-boundary"
+  ],
+  "status_note": "opened and taken by the Maker in the same turn",
+  "status_updated": "2026-09-29T20:21:12.4315273-05:00"
+}
