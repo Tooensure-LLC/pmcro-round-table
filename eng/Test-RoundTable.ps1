@@ -31,6 +31,7 @@ function Get-Faults($x) {
   }
   foreach ($id in 'play-all', 'pause', 'skip', 'stop', 'speed', 'voice', 'f-chief', 'f-trail') { if ($h -notmatch "id=`"$id`"") { $f.Add("CONTROLS: no #$id") } }
   if ($h -notmatch 'body\.clean header' -or $h -notmatch 'URLSearchParams') { $f.Add('CLEANVIEW: no ?chief= clean view for recording') }
+  if ($h -notmatch 'function isTop' -or $h -notmatch 'Natural') { $f.Add('QUALITY: the voice list is not limited to top-quality voices') }
   if ($h -notmatch 'speechSynthesis' -or $h -notmatch 'SpeechSynthesisUtterance') { $f.Add('CONTROLS: no built-in speech synthesis') }
   foreach ($m in [regex]::Matches($h, '(?i)\b(href|src|action|formaction|poster|srcset|cite|background)\s*=\s*["'']([^"'']*)["'']')) { if ($m.Groups[2].Value.Trim() -match $absRe) { $f.Add("ABSOLUTE: $($m.Groups[1].Value)=$($m.Groups[2].Value)") } }
   $code = (@([regex]::Matches($h, '(?is)<(script|style)\b[^>]*>(.*?)</\1>') | ForEach-Object { $_.Groups[2].Value })) -join "`n"
@@ -64,6 +65,7 @@ $muts = @(
   @('speed control removed', 'CONTROLS', { $args[0].h = $args[0].h.Replace('id="speed"', 'id="spd"') }),
   @('voice chooser removed', 'CONTROLS', { $args[0].h = $args[0].h.Replace('id="voice"', 'id="vc"') }),
   @('clean view removed', 'CLEANVIEW', { $args[0].h = $args[0].h.Replace('URLSearchParams', 'URLSearch') }),
+  @('quality filter removed', 'QUALITY', { $args[0].h = $args[0].h.Replace('function isTop', 'function isAny') }),
   @('trail with no folder', 'TRAIL', { $args[0].h = (R1 $args[0].h 'data-trail="[^"]*"' 'data-trail="9999-nope"') }),
   @('hand edit of the page', 'DRIFT', { $args[0].h = $args[0].h + '<!-- edit -->' }),
   @('docfx resource entry missing', 'DOCFX', { $args[0].dx = $args[0].dx.Replace('round-table.html', 'x.html') }),

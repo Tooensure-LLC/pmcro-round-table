@@ -66,7 +66,7 @@ body.clean header,body.clean main>p.note{display:none}
 <div id="status" class="note" aria-live="polite">Ready</div>
 </header>
 <main>
-<p class="note">Source: conversations-000 (6).zip, sha256 3BB2F2EC2AFD, 8 Chief replies, built from eng/round-table/transcript.json. Reply text is kept verbatim from the export. By default each Chief is read with its own voice (or its own pitch when the browser has fewer voices than Chiefs); pick a voice in the Voice list to read everything with that one voice. The choice is remembered in this browser.</p>
+<p class="note">Source: conversations-000 (6).zip, sha256 3BB2F2EC2AFD, 8 Chief replies, built from eng/round-table/transcript.json. Reply text is kept verbatim from the export. By default each Chief is read with its own voice (or its own pitch when the browser has fewer voices than Chiefs); the Voice list offers only top-quality natural English voices, and picking one reads everything with it. The choice is remembered in this browser.</p>
 <article class="blk" id="rt-01" data-chief="Chief of Staff" data-trail="0001-foundation" style="--h:25">
 <h2 class="who">I am the Chief of Staff:</h2>
 <p class="meta"><span class="chip">Chief of Staff</span><span class="chip">Trail: 0001-foundation</span><button class="play" type="button">Play</button></p>
@@ -302,12 +302,14 @@ I could start that headless process from here, but it spends usage and you defer
 var synth=window.speechSynthesis,$=function(s){return document.querySelector(s)},A=function(s){return Array.prototype.slice.call(document.querySelectorAll(s))};
 var chiefs=A('#f-chief option').map(function(o){return o.value}).filter(Boolean);
 var voices=[],q=[],pos=0,chunks=[],ci=0,gen=0,paused=false;
-var PREF=['Andrew Online','Ryan Online','Guy Online','Brian Online','Christopher Online','Eric Online','Aria Online','Jenny Online','Sonia Online','Emma Online','Michelle Online','Libby Online','Ava Online','Roger Online','Thomas Online','Steffan Online'],saved='';
+var PREF=['Andrew Online','Ava Online','Brian Online','Emma Online','Ryan Online','Sonia Online','Andrew Multilingual','Ava Multilingual','Brian Multilingual','Emma Multilingual','Guy Online','Aria Online','Jenny Online','Christopher Online','Eric Online','Michelle Online','Libby Online','Roger Online'],saved='';
 try{saved=localStorage.getItem('rt-voice')||''}catch(e){saved=''}
 function rank(v){for(var i=0;i<PREF.length;i++){if(v.name.indexOf('Microsoft '+PREF[i])===0)return i}return 99}
+function isTop(v){return /^en/i.test(v.lang)&&/\(Natural\)|Premium|Enhanced|Neural/i.test(v.name)}
+function byq(x,y){return rank(x)-rank(y)||(x.name<y.name?-1:1)}
 function opt(v){var o=document.createElement('option');o.value=v.name;o.textContent=v.name;return o}
-function fill(all){var s=$('#voice'),cur=s.value||saved,a=document.createElement('option'),g1=document.createElement('optgroup'),g2=document.createElement('optgroup');s.textContent='';a.value='';a.textContent='Auto (one voice per Chief)';s.appendChild(a);g1.label='English';g2.label='Other languages';all.slice().sort(function(x,y){return rank(x)-rank(y)||(x.name<y.name?-1:1)}).forEach(function(v){(/^en/i.test(v.lang)?g1:g2).appendChild(opt(v))});if(g1.children.length)s.appendChild(g1);if(g2.children.length)s.appendChild(g2);s.value=cur;if(s.value!==cur)s.value=''}
-function loadVoices(){if(!synth)return;var v=synth.getVoices(),en=v.filter(function(x){return /^en/i.test(x.lang)});voices=(en.length?en:v).slice().sort(function(a,b){return rank(a)-rank(b)||(a.name<b.name?-1:1)});fill(v)}
+function fill(all){var s=$('#voice'),cur=s.value||saved,a=document.createElement('option'),g=document.createElement('optgroup'),top=all.filter(isTop),src=top.length?top:all.filter(function(x){return /^en/i.test(x.lang)});s.textContent='';a.value='';a.textContent='Auto (one voice per Chief)';s.appendChild(a);g.label=top.length?'Top quality (natural, English)':'English (no natural voices found in this browser)';src.slice().sort(byq).forEach(function(v){g.appendChild(opt(v))});if(g.children.length)s.appendChild(g);s.value=cur;if(s.value!==cur)s.value=''}
+function loadVoices(){if(!synth)return;var v=synth.getVoices(),top=v.filter(isTop),en=v.filter(function(x){return /^en/i.test(x.lang)});voices=(top.length?top:(en.length?en:v)).slice().sort(byq);fill(v)}
 function chosen(){var n=$('#voice').value,a=synth?synth.getVoices():[];if(!n)return null;for(var i=0;i<a.length;i++){if(a[i].name===n)return a[i]}return null}
 function pick(t){var c=chosen();if(c)return{v:c,p:1};var i=Math.max(0,chiefs.indexOf(t)),n=voices.length||1,r=Math.floor(i/n);return{v:voices[i%n],p:[1,0.75,1.25,0.6][r%4]}}
 function split(t){var out=[],cur='',s=t.replace(/\s+/g,' ').match(/[^.!?:;]+[.!?:;]*\s*/g)||[t];s.forEach(function(x){if(cur&&(cur+x).length>180){out.push(cur);cur=x}else cur+=x});if(cur)out.push(cur);return out}
