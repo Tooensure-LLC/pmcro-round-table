@@ -28,7 +28,8 @@
                   "resource":  [
                                    {
                                        "files":  [
-                                                     "images/**"
+                                                     "images/**",
+                                                     "round-table.html"
                                                  ]
                                    }
                                ],

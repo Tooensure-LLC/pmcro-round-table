@@ -1,0 +1,24 @@
+{
+  "id": "0005",
+  "raw_intent": "@chief-of-staff /pmcro:seed Read the exported chat data from the previous session plus the repo, and build the Round Table as one self-contained HTML page under docs/ that opens by double-click in a browser with no server, no external requests and only relative paths. It shows every Round Table exchange as a transcript, one block per Chief in the \"I am the [full title]:\" / \"Hey [full title],\" format, with the Chief's name, the trail and the seed it belongs to. A Play button per block and a Play all button read the transcript aloud with the browser's built-in speech synthesis, one distinct voice per Chief, with pause, skip and speed. A filter by Chief and by trail. Build it so DocFX can also include it as a docs page. Open the trail first (log before act), keep EC-0001 and EC-0002, write must-fail proofs (for example, the page fails its check if any block is missing a speaker or any link is absolute), no push and no install, and stop at HANDOFF: CHECKER REQUIRED.",
+  "true_intent": "Build the Round Table: one static HTML page in docs/ that shows every Chief reply from the exported session as a transcript block (speaker, trail, seed), reads it aloud with the browser's own speech synthesis with a distinct voice per Chief, filters by Chief and trail, and is also a DocFX docs page. Prove the page can fail: a missing speaker or an absolute link must make its check fail.",
+  "done_means": [
+    "one docs/round-table.html has no fetch, no external request and no absolute link; a check fails on an injected absolute link, an injected external request and an injected external file (real output)",
+    "the page has one block per Chief reply found in the export, each with speaker, Chief name, trail and seed; the check fails when a block is dropped or has no speaker (real output)",
+    "Play per block, Play all, pause, skip, speed, a distinct voice per Chief and filters by Chief and trail exist in the page; the check fails when a control is removed (real output)",
+    "docs/docfx.json and docs/toc.yml include the page and the check fails when either is missing (real output)",
+    "the page equals a fresh build from its source; the check fails on a hand edit (real output)",
+    "no push, no install, no law edit, no spend without Shawn"
+  ],
+  "owners": [
+    "chief-of-staff",
+    "cto"
+  ],
+  "pace": "one loop; stop at HANDOFF: CHECKER REQUIRED",
+  "status": "taken",
+  "status_note": "taken-by-trails/0004-round-table",
+  "status_updated": "2026-09-29T20:51:36.0624952-05:00",
+  "trails": [
+    "trails/0004-round-table"
+  ]
+}

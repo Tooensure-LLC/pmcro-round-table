@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Round Table</title>
+<style>
+:root{--bg:#fff;--fg:#1c1f24;--mut:#5b6470;--card:#f4f6f9;--line:#d5dae1;--acc:#2456c6}
+@media(prefers-color-scheme:dark){:root{--bg:#14171c;--fg:#e6e9ee;--mut:#9aa4b2;--card:#1d222a;--line:#333b47;--acc:#7aa2ff}}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 system-ui,"Segoe UI",sans-serif}
+header{position:sticky;top:0;z-index:2;background:var(--bg);border-bottom:1px solid var(--line);padding:.6rem 1rem}
+h1{font-size:1.2rem;margin:0 0 .4rem}
+.bar{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+button,select{font:inherit;padding:.3rem .7rem;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--fg)}
+button{cursor:pointer}button:hover{border-color:var(--acc)}button:disabled{opacity:.5;cursor:default}
+main{max-width:56rem;margin:0 auto;padding:1rem}
+.note{color:var(--mut);font-size:.9rem}
+.blk{border:1px solid var(--line);border-left:6px solid hsl(var(--h),60%,50%);background:var(--card);border-radius:8px;padding:.6rem 1rem;margin:1rem 0}
+.blk.on{outline:2px solid var(--acc)}
+.blk[hidden]{display:none}
+.who{font-size:1.05rem;margin:.2rem 0}
+.meta{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;margin:.3rem 0}
+.chip{border:1px solid var(--line);border-radius:99px;padding:0 .6rem;font-size:.85rem;color:var(--mut)}
+.seed{margin:.4rem 0;padding:.2rem .8rem;border-left:3px solid var(--line);color:var(--mut);white-space:pre-wrap;font-size:.92rem}
+.body{white-space:pre-wrap;word-break:break-word}
+.hey{font-weight:600;margin:.4rem 0 0}
+code{background:var(--bg);padding:0 .25rem;border-radius:4px}
+</style>
+</head>
+<body>
+<header>
+<h1>Round Table</h1>
+<div class="bar">
+<button id="play-all" type="button">Play all</button>
+<button id="pause" type="button">Pause</button>
+<button id="skip" type="button">Skip</button>
+<button id="stop" type="button">Stop</button>
+<label>Speed <select id="speed"><option value="0.75">0.75x</option><option value="1" selected>1x</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option><option value="2">2x</option></select></label>
+<label>Chief <select id="f-chief"><option value="">All</option>
+{{CHIEF_OPTIONS}}
+</select></label>
+<label>Trail <select id="f-trail"><option value="">All</option>
+{{TRAIL_OPTIONS}}
+</select></label>
+<span id="count" class="note"></span>
+</div>
+<div id="status" class="note" aria-live="polite">Ready</div>
+</header>
+<main>
+<p class="note">{{SOURCE}}. Reply text is kept verbatim from the export. Each Chief is read with its own voice (or its own pitch when the browser has fewer voices than Chiefs).</p>
+{{BLOCKS}}
+</main>
+<script>
+(function(){
+var synth=window.speechSynthesis,$=function(s){return document.querySelector(s)},A=function(s){return Array.prototype.slice.call(document.querySelectorAll(s))};
+var chiefs=A('#f-chief option').map(function(o){return o.value}).filter(Boolean);
+var voices=[],q=[],pos=0,chunks=[],ci=0,gen=0,paused=false;
+function loadVoices(){if(!synth)return;var v=synth.getVoices(),en=v.filter(function(x){return /^en/i.test(x.lang)});voices=(en.length?en:v).slice().sort(function(a,b){return a.name<b.name?-1:1})}
+function pick(t){var i=Math.max(0,chiefs.indexOf(t)),n=voices.length||1,r=Math.floor(i/n);return{v:voices[i%n],p:[1,0.75,1.25,0.6][r%4]}}
+function split(t){var out=[],cur='',s=t.replace(/\s+/g,' ').match(/[^.!?:;]+[.!?:;]*\s*/g)||[t];s.forEach(function(x){if(cur&&(cur+x).length>180){out.push(cur);cur=x}else cur+=x});if(cur)out.push(cur);return out}
+function mark(b){A('.blk.on').forEach(function(x){x.classList.remove('on')});if(b){b.classList.add('on');b.scrollIntoView({block:'center'})}}
+function reset(){paused=false;$('#pause').textContent='Pause'}
+function say(){var b=q[pos],g=gen,p=pick(b.dataset.chief),u=new SpeechSynthesisUtterance(chunks[ci]);
+if(p.v)u.voice=p.v;u.pitch=p.p;u.rate=+$('#speed').value;
+function nxt(){if(g!==gen)return;ci++;if(ci<chunks.length)say();else{pos++;begin()}}
+u.onend=nxt;u.onerror=nxt;
+$('#status').textContent='Speaking: '+b.dataset.chief+(p.v?' ('+p.v.name+')':'');synth.speak(u)}
+function begin(){var b=q[pos];if(!b){stop();return}mark(b);chunks=split(b.querySelector('.body').innerText);ci=0;say()}
+function halt(){gen++;synth.cancel();synth.resume();reset()}
+function stop(){gen++;if(synth){synth.cancel();synth.resume()}q=[];mark(null);reset();$('#status').textContent='Stopped'}
+function run(list){if(!synth||!list.length)return;halt();q=list;pos=0;begin()}
+function visible(){return A('.blk').filter(function(b){return !b.hidden})}
+function filt(){var c=$('#f-chief').value,t=$('#f-trail').value,n=0;A('.blk').forEach(function(b){var ok=(!c||b.dataset.chief===c)&&(!t||b.dataset.trail===t);b.hidden=!ok;if(ok)n++});$('#count').textContent='Showing '+n+' of '+A('.blk').length}
+$('#f-chief').onchange=filt;$('#f-trail').onchange=filt;
+$('#play-all').onclick=function(){run(visible())};
+A('.play').forEach(function(x){x.onclick=function(){run([x.closest('.blk')])}});
+$('#pause').onclick=function(){if(!synth||!q.length)return;if(paused){synth.resume();reset()}else{synth.pause();paused=true;this.textContent='Resume'}};
+$('#skip').onclick=function(){if(!q.length)return;halt();pos++;begin()};
+$('#stop').onclick=stop;
+$('#speed').onchange=function(){if(q.length&&q[pos]){halt();say()}};
+if(!synth){A('button').forEach(function(b){b.disabled=true});$('#status').textContent='Speech synthesis is not available in this browser; the transcript is still readable.'}else{loadVoices();synth.onvoiceschanged=loadVoices}
+filt();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Round Table</title>
+<style>
+:root{--bg:#fff;--fg:#1c1f24;--mut:#5b6470;--card:#f4f6f9;--line:#d5dae1;--acc:#2456c6}
+@media(prefers-color-scheme:dark){:root{--bg:#14171c;--fg:#e6e9ee;--mut:#9aa4b2;--card:#1d222a;--line:#333b47;--acc:#7aa2ff}}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.55 system-ui,"Segoe UI",sans-serif}
+header{position:sticky;top:0;z-index:2;background:var(--bg);border-bottom:1px solid var(--line);padding:.6rem 1rem}
+h1{font-size:1.2rem;margin:0 0 .4rem}
+.bar{display:flex;flex-wrap:wrap;gap:.5rem;align-items:center}
+button,select{font:inherit;padding:.3rem .7rem;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--fg)}
+button{cursor:pointer}button:hover{border-color:var(--acc)}button:disabled{opacity:.5;cursor:default}
+main{max-width:56rem;margin:0 auto;padding:1rem}
+.note{color:var(--mut);font-size:.9rem}
+.blk{border:1px solid var(--line);border-left:6px solid hsl(var(--h),60%,50%);background:var(--card);border-radius:8px;padding:.6rem 1rem;margin:1rem 0}
+.blk.on{outline:2px solid var(--acc)}
+.blk[hidden]{display:none}
+.who{font-size:1.05rem;margin:.2rem 0}
+.meta{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center;margin:.3rem 0}
+.chip{border:1px solid var(--line);border-radius:99px;padding:0 .6rem;font-size:.85rem;color:var(--mut)}
+.seed{margin:.4rem 0;padding:.2rem .8rem;border-left:3px solid var(--line);color:var(--mut);white-space:pre-wrap;font-size:.92rem}
+.body{white-space:pre-wrap;word-break:break-word}
+.hey{font-weight:600;margin:.4rem 0 0}
+code{background:var(--bg);padding:0 .25rem;border-radius:4px}
+</style>
+</head>
+<body>
+<header>
+<h1>Round Table</h1>
+<div class="bar">
+<button id="play-all" type="button">Play all</button>
+<button id="pause" type="button">Pause</button>
+<button id="skip" type="button">Skip</button>
+<button id="stop" type="button">Stop</button>
+<label>Speed <select id="speed"><option value="0.75">0.75x</option><option value="1" selected>1x</option><option value="1.25">1.25x</option><option value="1.5">1.5x</option><option value="2">2x</option></select></label>
+<label>Chief <select id="f-chief"><option value="">All</option>
+<option value="Chief of Staff">Chief of Staff (8)</option>
+<option value="CEO">CEO (0)</option>
+<option value="CTO Chief">CTO Chief (0)</option>
+<option value="CTO Checker">CTO Checker (0)</option>
+<option value="CPO">CPO (0)</option>
+<option value="CDO">CDO (0)</option>
+<option value="CISO">CISO (0)</option>
+<option value="COO">COO (0)</option>
+<option value="CFO">CFO (0)</option>
+<option value="CLO">CLO (0)</option>
+<option value="Chief Agent Officer">Chief Agent Officer (0)</option>
+<option value="CRO">CRO (0)</option>
+<option value="CMO">CMO (0)</option>
+<option value="CCO">CCO (0)</option>
+<option value="Auditor">Auditor (0)</option>
+</select></label>
+<label>Trail <select id="f-trail"><option value="">All</option>
+<option value="0001-foundation">0001-foundation</option>
+<option value="0002-boundary">0002-boundary</option>
+<option value="0003-ec0002-must-fail">0003-ec0002-must-fail</option>
+<option value="none">none</option>
+</select></label>
+<span id="count" class="note"></span>
+</div>
+<div id="status" class="note" aria-live="polite">Ready</div>
+</header>
+<main>
+<p class="note">Source: conversations-000 (6).zip, sha256 3BB2F2EC2AFD, 8 Chief replies, built from eng/round-table/transcript.json. Reply text is kept verbatim from the export. Each Chief is read with its own voice (or its own pitch when the browser has fewer voices than Chiefs).</p>
+<article class="blk" id="rt-01" data-chief="Chief of Staff" data-trail="0001-foundation" style="--h:25">
+<h2 class="who">I am the Chief of Staff:</h2>
+<p class="meta"><span class="chip">Chief of Staff</span><span class="chip">Trail: 0001-foundation</span><button class="play" type="button">Play</button></p>
+<blockquote class="seed"><strong>Seed:</strong> No the zips I gave ypu I wannna continue</blockquote>
+<div class="body"><strong>I am the Chief of Staff, and I orchestrate this intent by reading your four exports against the repo on the Dev Drive and carrying the C-suite design forward from where the doc stops.</strong> I&#39;m using the reply format from your exports. I keep your intent as &quot;continue from the zips&quot; and route it to the CEO for the doc&#39;s open decisions and to the CTO Checker for loop 2.
+
+<strong>Chief of Staff → Planner.</strong> The exports hold the C-suite design doc, the project memory (Round Table skill design, &quot;trail is the product&quot;, Everything-as-Agent) and the format preferences. The repo already implements most of the doc. The plan is to close every open decision the repo already answers and leave you only the ones it can&#39;t.
+
+<strong>Planner → Maker.</strong> I compared each item in the doc&#39;s &quot;Decisions only Shawn can make&quot; list against <code>company.json</code> and the generated Chief files. I wrote nothing and changed no policy.
+
+<strong>Maker → Checker.</strong> The evidence comes from the repo files.
+
+| Doc item | What the repo shows | Status |
+| --- | --- | --- |
+| CRO and CCO meanings (the open comment) | <code>chiefs/cro</code> owns pricing, pipeline and selling; <code>chiefs/cco</code> owns onboarding and support | Resolved: Revenue and Customer, keep |
+| Chiefs are in | 15 generated bots: 13 Chiefs, the CTO Checker and the Auditor | Resolved |
+| Which copy is canonical | <code>U:\src\pmcro</code> is the single source; <code>_upstream</code> holds only the vendored dotnet-skills | Resolved for the new repo. I didn&#39;t touch the old <code>T:\</code> copies. |
+| What happens on LOOP | Loop 2 continued on the same trail, counted against MaxLoops 3 | Resolved in practice, but not written into <code>company.json</code> |
+| CFO ceiling | The CFO&#39;s first task asks you for the figure | <strong>Open (yours)</strong> |
+| What sells first | The CRO&#39;s first task asks who the first buyers are | <strong>Open (yours)</strong> |
+
+- <strong>Doc vs repo differences:</strong> the doc says a local commit goes to you as TYPE1, while the repo permits the loop&#39;s local commit under your 2026-09-29 rule. The doc&#39;s Phase 1 starts with 3 bots, but the repo generates all 15.
+- <strong>What I couldn&#39;t verify:</strong> the old <code>T:\</code> files and <code>parking-lot.md</code>.
+
+<strong>Checker → Reflector.</strong> I checked only this reconciliation, read-only. I issue no verdict on loop 2. A fresh bot must do that, because I played Maker earlier.
+
+<strong>Reflector.</strong> The constraint I&#39;d earn from this: a design doc and the repo drift silently. Before any Chief is switched on, a check should diff the doc&#39;s decision list against <code>company.json</code>. The doc and the repo now agree on everything except your two open items.
+
+<strong>Next seed:</strong>
+<code>@cto-checker /pmcro:check 0001-foundation loop 2: fresh context, read-only. Re-run Test-Determinism, Test-PluginLayout, dotnet test and tools/replay.ps1 yourself; issue PASS, LOOP or HALT; then list what you would want the Auditor to sample.</code></div>
+</article>
+<article class="blk" id="rt-02" data-chief="Chief of Staff" data-trail="0002-boundary" style="--h:25">
+<h2 class="who">I am the Chief of Staff:</h2>
+<p class="meta"><span class="chip">Chief of Staff</span><span class="chip">Trail: 0002-boundary</span><button class="play" type="button">Play</button></p>
+<blockquote class="seed"><strong>Seed:</strong> &quot;/pmcro:approved go&quot;</blockquote>
+<div class="body"><strong>I am the Chief of Staff, and I orchestrate this intent by acting on your approval and validating the stack online.</strong> You said &quot;/pmcro:approved go&quot;. I read that as approving CC-0001-BOUNDARY and part 21, and as the go for the research. I route the approval to the CTO and the research to the COO and CFO.
+
+<strong>Planner → Maker.</strong> I opened a new trail so the change could be logged first. <code>trails/0002-boundary</code> holds the frame, the make frame and queue item 0002. Then I promoted the candidate to earned constraint <strong>EC-0002</strong> in <code>company.json</code> and regenerated every host file. The constraint reads:
+
+- A platform block is a boundary, not an obstacle.
+- The platform&#39;s policy is a validated resource, so the Planner plans only inside it.
+- On a block the Checker gives HALT, the Reflector records the policy and a permitted path, and the Orchestrator returns ESCALATE or INTERRUPT.
+- Trail products name their permitted path and ship their boundary constraints, because the buyer becomes bound by the platform&#39;s terms.
+- The rule holds on Grok Bot, Claude computer use and your own runtime.
+
+<strong>Maker → Checker.</strong> These are the results from the real commands.
+- <strong>Build:</strong> <code>build.ps1</code> regenerated 15 bots and 9 rules, and EC-0002 shows up in <code>AGENTS.md</code> and the Chief files.
+- <strong>Checks:</strong> the queue check passes over 2 items, the layout check passes, and <code>dotnet test</code> passes 6 of 6.
+- <strong>Commit:</strong> I made the local commit <code>62adf4e</code>, which did not push.
+
+<strong>Validation results.</strong> Two of these change your setup.
+- <strong>Grok Bot limits:</strong> an account can have up to 50 Bots and group chats combined, so 15 bots plus the Round Tables fit. A group chat holds two to six Bots, which matches the 6-member Executive Round Table you already have.
+- <strong>Shared computer:</strong> files and sign-ins on the shared computer aren&#39;t isolated per Bot. The Cursor team docs advise that when a workload needs its own computer and credential set, give it its own Cursor user. So a Chief&#39;s Checker only gets real isolation on a separate Cursor user, not on a separate Bot.
+- <strong>CFO ceiling:</strong> there is no Grok Bot-specific spend cap; the on-demand control on your Cursor account is the only ceiling. That is where your CFO dollar figure has to be set.
+- <strong>Routine cost:</strong> routines spend usage every time they run, and an hourly schedule or a busy Slack listener can use a week of usage in a day. Prefer event triggers to schedules.
+- <strong>MAF Agent Skills (.NET):</strong> it has left experimental preview and the API is stable, with human-in-the-loop approval among the production controls. That supports your reject/approve gate on skill calls.
+- <strong>Versions:</strong> the latest .NET release I found is dotnet-1.12.0, released 2 Jul. Your <code>Directory.Packages.props</code> pins Microsoft.Agents.AI 1.23.0, which is higher than that tag, so I couldn&#39;t confirm 1.23.0 from that page. Hosting and DevUI are marked preview and the OpenAI hosting package is alpha, so I&#39;d keep those out of anything you sell.
+- <strong>Agent Governance Toolkit:</strong> v3.7.0 (2026-05-18) is a Microsoft-signed public preview, production-quality but may have breaking changes before GA. It integrates with MAF through the middleware pipeline. Adopting it is an install, so it needs your go.
+
+<strong>Checker → Reflector.</strong> I checked the search results against your repo&#39;s pins. I issue no verdict on either trail. A fresh Checker still has to review loop 2 of trail 0001 and trail 0002.
+
+<strong>Reflector.</strong> EC-0002 was promoted on your approval of a policy, but RR-001 says promotion normally needs a check proven able to fail. A must-fail check for the boundary rule is still owed. Also, you never told me the candidate names for renaming &quot;Checker&quot;, so I left the law alone.
+
+<strong>Next seed:</strong>
+<code>@cto /pmcro:seed Add a must-fail proof for EC-0002: a sample plan that routes around a platform block must be refused by the Checker. Ask Shawn for the CFO on-demand dollar ceiling and the Checker rename candidates first, and say go or no-go on installing the Agent Governance Toolkit.</code></div>
+</article>
+<article class="blk" id="rt-03" data-chief="Chief of Staff" data-trail="0003-ec0002-must-fail" style="--h:25">
+<h2 class="who">I am the Chief of Staff:</h2>
+<p class="meta"><span class="chip">Chief of Staff</span><span class="chip">Trail: 0003-ec0002-must-fail</span><button class="play" type="button">Play</button></p>
+<blockquote class="seed"><strong>Seed:</strong> @cto /pmcro:seed Add a must-fail proof for EC-0002: a sample plan that routes around a platform block must be refused by the Checker. Ask Shawn for the CFO on-demand dollar ceiling and the Checker rename candidates first, and say go or no-go on installing the Agent Governance Toolkit.</blockquote>
+<div class="body"><strong>I am the Chief of Staff, and I orchestrate this intent by turning your seed into queue item 0003.</strong> I keep your words verbatim as <code>raw_intent</code> and route the item to the CTO, with the CTO Checker as the seat that must refuse the bad plan. I hand it to the Planner.
+
+<strong>Planner → Maker.</strong> The plan would write the proof, but three things need your answers first, and I won&#39;t guess any of them. I planned nothing past that.
+
+<strong>Maker → Checker.</strong> I wrote <code>queue/0003-ec0002-must-fail.json</code> with status <code>queued</code>. It holds:
+- <strong>Your seed:</strong> the raw intent, verbatim.
+- <strong>What it means:</strong> a sample plan that routes around a platform block must get HALT from the Checker, and a plan on the permitted path must not.
+- <strong>Proofs that can fail:</strong> the refusal is shown on a sample built by the same serializer that writes trails, per EC-0001.
+- <strong>Owners:</strong> the CTO and the CTO Checker.
+- <strong>Waiting on you:</strong> the three answers.
+
+<code>tools/check-queue.ps1</code> passes over 3 items. The file is uncommitted, because no trail is open for it yet.
+
+<strong>Checker → Reflector.</strong> The queue file is valid. I verified nothing about the proof itself, because it doesn&#39;t exist yet.
+
+<strong>Reflector.</strong> Those three answers block the seed, and I need them from you:
+1. <strong>CFO ceiling:</strong> what dollar figure per week, and per month for on-demand, for Grok Bot usage? The on-demand limit is the only spend cap Grok Bot has.
+2. <strong>Checker rename:</strong> what candidate names do you want considered? The paste never showed them.
+3. <strong>Agent Governance Toolkit:</strong> go or no-go on installing it? It is an install, so it stays gated until you say.
+
+<strong>Next seed:</strong>
+<code>@cto /pmcro:loop 0003 once Shawn has given the CFO ceiling, the Checker rename candidates and the Agent Governance Toolkit go or no-go: open trails/0003-ec0002-must-fail, write the plan first, then build the must-fail sample and the Checker refusal proof, and stop at HANDOFF: CHECKER REQUIRED.</code></div>
+</article>
+<article class="blk" id="rt-04" data-chief="Chief of Staff" data-trail="0003-ec0002-must-fail" style="--h:25">
+<h2 class="who">I am the Chief of Staff:</h2>
+<p class="meta"><span class="chip">Chief of Staff</span><span class="chip">Trail: 0003-ec0002-must-fail</span><button class="play" type="button">Play</button></p>
+<blockquote class="seed"><strong>Seed:</strong> @cto /pmcro:loop 0003 once Shawn has given the CFO ceiling, the Checker rename candidates and the Agent Governance Toolkit go or no-go: open trails/0003-ec0002-must-fail, write the plan first, then build the must-fail sample and the Checker refusal proof, and stop at HANDOFF: CHECKER REQUIRED.
+Question one. Okay, so I was able to access an old Grok account, but it think about it, it&#39;s I have um credits. I got $71 as credits, but it&#39;s only for like the constant API. For Grok bot, I signed up for the free subscription. I&#39;m gonna see what I can do in like a day or so. Um and go about that. Um and three, yes.</blockquote>
+<div class="body"><strong>I am the Chief of Staff, and I orchestrate queue item 0003 by opening its trail and handing it to the CTO.</strong> I kept your words verbatim as <code>raw_intent</code>. Your answers were: no CFO ceiling yet, no rename candidates given, and yes to the Agent Governance Toolkit. The seed said to wait for all three. I ran the loop anyway, because the proof doesn&#39;t depend on the ceiling or the rename. I record that in the frame, and I say so here so you can overrule it.
+
+<strong>Planner → Maker.</strong> I logged <code>00-frame</code> and <code>01-plan</code> first. Then I built:
+- <strong><code>eng/Test-BoundaryPlan.ps1</code>:</strong> once a frame carries a platform block, every later plan step must use a permitted path (the official API, the account owner acting, or a different goal). A step with any other path, or with evasion wording, gets HALT citing EC-0002.
+- <strong><code>eng/Test-BoundaryProof.ps1</code>:</strong> it builds sample trails in a scratch repo with <code>frame.ps1</code>, so the trail serializer writes them.
+
+<strong>Maker → Checker.</strong> These are the real results.
+- <strong>Bypass sample:</strong> refused with HALT citing EC-0002, for two reasons, the non-permitted path and the evasion wording.
+- <strong>Permitted-path sample:</strong> not refused (BOUNDARY-OK).
+- <strong>Rule switched off:</strong> the bypass sample is reported as not refused, which shows the harness can fail.
+- <strong>Path scan:</strong> zero absolute paths in the sample frames.
+- <strong>Commit:</strong> the local commit <code>60066e0</code>, with the commit gates passing. It did not push.
+
+<strong>Checker → Reflector.</strong> I issue no verdict. A separate Checker still has to review this trail, and trails 0001 and 0002 as well.
+
+<strong>Reflector.</strong>
+- <strong>Weakest point:</strong> the evasion wording check is a heuristic, and the stronger signal is the Planner labelling its path honestly. The switched-off case shows the harness can fail, but it doesn&#39;t prove that every real bypass is caught.
+- <strong>Not wired in:</strong> the check isn&#39;t hooked into the <code>check</code> skill yet. That needs a <code>company.json</code> edit, so it&#39;s a follow-up.
+- <strong>Toolkit:</strong> I seeded your &quot;yes&quot; as queue item 0004 and did not install anything. It gets its own trail, with the package name and version checked against the registry first.
+- <strong>Still yours:</strong> the CFO ceiling, once you&#39;ve decided, and the Checker rename candidates. Your $71 is API credit and, as you said, doesn&#39;t cover Grok Bot, so the ceiling is still the on-demand limit on your Cursor account.
+
+<strong>Next seed:</strong>
+<code>@cto-checker /pmcro:check 0003-ec0002-must-fail: fresh context, read-only. Re-run eng/Test-BoundaryProof.ps1 yourself, then write your own must-fail sample, one that mislabels a bypass step as official_api and hides the evasion in different wording, and report whether it slips through. Issue PASS, LOOP or HALT.</code></div>
+</article>
+<article class="blk" id="rt-05" data-chief="Chief of Staff" data-trail="0003-ec0002-must-fail" style="--h:25">
+<h2 class="who">I am the Chief of Staff:</h2>
+<p class="meta"><span class="chip">Chief of Staff</span><span class="chip">Trail: 0003-ec0002-must-fail</span><button class="play" type="button">Play</button></p>
+<blockquote class="seed"><strong>Seed:</strong> <code>@cto-checker /pmcro:check 0003-ec0002-must-fail: fresh context, read-only. Re-run eng/Test-BoundaryProof.ps1 yourself, then write your own must-fail sample, one that mislabels a bypass step as official_api and hides the evasion in different wording, and report whether it slips through. Issue PASS, LOOP or HALT.</code>Okay, the checker is actually, for instance, I seen that Claude Code had like by default you will see a code reviewer. That&#39;s I, that&#39;s when it comes down. You got sub like teams. So it, you have the chiefs and the chiefs of it has the team and that team I believe. Obviously, I don&#39;t know, should I say, should it be more of a mythology? Is that what you call it? Uh, I don&#39;t know how to do that.</blockquote>
+<div class="body"><strong>I am the Chief of Staff, and I orchestrate your check request by running the evidence and stopping short of a verdict.</strong> Your seed asks for a fresh-context Checker, but this session built trail 0003. EC-004 says nobody scores their own work. So I re-ran the proofs and wrote the adversarial samples read-only in a scratch folder, and I did not write <code>03-check</code> or a PASS, LOOP or HALT. A fresh session has to issue that.
+
+<strong>What I found.</strong> The repo was untouched by the check, and <code>eng/Test-BoundaryProof.ps1</code> still passes all four of its own cases. Four samples I wrote all got <strong>BOUNDARY-OK</strong>, so all four slipped through:
+
+| Sample | Result |
+| --- | --- |
+| A. Bypass labelled <code>official_api</code>, with evasion in different words (&quot;pace clicks like a busy person&quot;, &quot;pick up the session from a different network&quot;) | Slips through |
+| B. Block recorded in prose, with no <code>platform_block</code> key | Slips through, because the rule never activates |
+| C. Bypass steps under a key named <code>actions</code> instead of <code>steps</code> | Slips through |
+| D. Bypass steps in a make frame instead of a plan frame | Slips through |
+
+The proof only passes on samples shaped like the ones its author wrote. Sample A is the one that matters most, because the check trusts the <code>path_kind</code> label and the word list only catches the obvious phrases.
+
+<strong>Your Checker, teams and naming question.</strong>
+- <strong>Claude Code:</strong> it supports subagents, but I haven&#39;t verified that a default code reviewer ships with it. Treat that part as unconfirmed.
+- <strong>Your idea is sound:</strong> each Chief keeps a team whose members do the plan, make and check work, and the check seat is its own separate agent. The Checker is the only role that has to be a separate bot, so it could be the &quot;code reviewer&quot; of each team.
+- <strong>The word you&#39;re after</strong> is probably a themed or mythic naming scheme. I&#39;d keep the functional names (Checker, Maker) in the laws, scripts and skills, because replay and the check scripts refer to them. Put the theme in as a display name only, so local Ollama models still read plain words.
+- <strong>The rename is still a policy change.</strong> These are the candidates you can pick from, and it stays undecided until you choose:
+  1. Keep &quot;Checker&quot; as it is.
+  2. A functional pair such as Reviewer and Auditor.
+  3. A mythic display layer, for example Athena for the Planner and Argus for the Checker, with the law text unchanged.
+
+<strong>Reflector.</strong> The lesson is that a must-fail proof written by the Maker only proves the Maker&#39;s own imagination. Samples A to D should become permanent must-fail cases, and the check should not rely on a single <code>platform_block</code> key or on the plan&#39;s own label for its path.
+
+<strong>Next seed:</strong>
+<code>@cto /pmcro:loop 0003 loop 2 of 3: add samples A to D as must-fail cases in eng/Test-BoundaryProof.ps1 first and show them failing, then harden Test-BoundaryPlan (scan every frame after a block for steps or actions, in any phase; treat a block noted in prose as a block; do not trust path_kind alone). Then hand the trail to a fresh @cto-checker session with no Maker context.</code></div>
+</article>
+<article class="blk" id="rt-06" data-chief="Chief of Staff" data-trail="0003-ec0002-must-fail" style="--h:25">
+<h2 class="who">I am the Chief of Staff:</h2>
+<p class="meta"><span class="chip">Chief of Staff</span><span class="chip">Trail: 0003-ec0002-must-fail</span><button class="play" type="button">Play</button></p>
+<blockquote class="seed"><strong>Seed:</strong> @cto /pmcro:loop 0003 loop 2 of 3: add samples A to D as must-fail cases in eng/Test-BoundaryProof.ps1 first and show them failing, then harden Test-BoundaryPlan (scan every frame after a block for steps or actions, in any phase; treat a block noted in prose as a block; do not trust path_kind alone). Then hand the trail to a fresh @cto-checker session with no Maker context.</blockquote>
+<div class="body"><strong>I am the Chief of Staff, and I orchestrate loop 2 of 3 on trail 0003 by opening the plan first and handing the CTO the four samples.</strong> I logged <code>03-plan</code> before touching any file, then added samples A to D as must-fail cases and showed them failing.
+
+<strong>Planner → Maker.</strong> The plan had two steps: rewrite the proof so A to D must be refused, then harden the check, with the failing run captured before the fix.
+
+<strong>Maker → Checker.</strong> These are the real results.
+- <strong>Must-fail first:</strong> against the unchanged loop 1 check, the new proof gave RESULT FAIL (4). A, B, C and D each came back BOUNDARY-OK.
+- <strong>After hardening, the proof passes:</strong>
+  - <strong>A:</strong> refused, because the step&#39;s text doesn&#39;t back up its <code>official_api</code> label and it has evasion wording.
+  - <strong>B:</strong> refused, because a block noted in prose now counts as a block.
+  - <strong>C:</strong> refused, because any object with a <code>do</code>, <code>action</code> or <code>command</code> string counts as a step, whatever the key.
+  - <strong>D:</strong> refused, because a make frame is scanned too.
+- <strong>Must-not-refuse cases:</strong> the permitted path passes on its own, after a prose-only block, and under an <code>actions</code> key. The switched-off case still isn&#39;t refused, and the sample frames hold zero absolute paths.
+- <strong>A bug I hit:</strong> my first hardened draft recursed without end, because JSON timestamps parse as dates. I fixed it before the passing run and recorded it in the frame.
+- <strong>Commit:</strong> the local commit <code>e5eac13</code> passed the commit gates, and I did not push.
+
+<strong>One gap remains.</strong> I wrote a fifth sample of my own: a step that calls &quot;the API endpoint with the session cookies copied from a logged-in customer browser&quot;, labelled <code>official_api</code>. It still gets BOUNDARY-OK. The label check is keyword-based, so a step that names an API and avoids the listed wording passes. I didn&#39;t fix it. The frame records it as open.
+
+<strong>Checker → Reflector.</strong> I issue no verdict. This is the Maker&#39;s own work, so a fresh Checker has to score it. Only one loop is left on this trail (EC-009), so the fresh Checker&#39;s LOOP would be the last.
+
+<strong>Reflector.</strong>
+- <strong>Lesson:</strong> a keyword check can be beaten by rewording, so the durable fix is structural, not a longer word list. A permitted step should name a concrete object the platform issued (an API key or token reference) and must not name credentials taken from someone else&#39;s session.
+- <strong>Handoff:</strong> I can&#39;t start the fresh Checker from here. Open a new session with no Maker context and paste the seed below.
+
+<strong>Next seed:</strong>
+<code>@cto-checker /pmcro:check 0003-ec0002-must-fail: fresh context, read-only, no Maker context. Re-run eng/Test-BoundaryProof.ps1 yourself, then write your own must-fail samples, including one that names an API but uses credentials taken from another person&#39;s session. Issue PASS, LOOP or HALT and write 05-check.</code></div>
+</article>
+<article class="blk" id="rt-07" data-chief="Chief of Staff" data-trail="0003-ec0002-must-fail" style="--h:25">
+<h2 class="who">I am the Chief of Staff:</h2>
+<p class="meta"><span class="chip">Chief of Staff</span><span class="chip">Trail: 0003-ec0002-must-fail</span><button class="play" type="button">Play</button></p>
+<blockquote class="seed"><strong>Seed:</strong> @cto-checker /pmcro:check 0003-ec0002-must-fail: fresh context, read-only, no Maker context. Re-run eng/Test-BoundaryProof.ps1 yourself, then write your own must-fail samples, including one that names an API but uses credentials taken from another person&#39;s session. Issue PASS, LOOP or HALT and write 05-check.See, and when you look and kind of study uh, anthropic agentic design uh, pattern, I see that the maker is like, what is the maker? The maker is the the argument. I forgot how what they call theirs, but they, you know, interact with the MCP skill, et cetera, that gets a response that can be chained to the checker. So wouldn&#39;t it be able to check it? You know what I&#39;m saying?</blockquote>
+<div class="body"><strong>I am the Chief of Staff, and I orchestrate your question by answering it and declining to write <code>05-check</code> from this session.</strong>
+
+<strong>Your question.</strong> Yes, the Maker&#39;s output can be chained straight into a check. The term you&#39;re after is the &quot;augmented LLM&quot;: a model with tools, retrieval and memory. In Anthropic&#39;s &quot;Building effective agents&quot; write-up, your Maker is that building block, and the chain into a checker is what they call prompt chaining, with a gate between steps. The looped version, one model generating and another evaluating, is the evaluator-optimizer workflow. That&#39;s the same shape as Maker, Checker and Reflector.
+
+<strong>Why it still has to be a fresh session.</strong> The chain only gives you a real check if the evaluator doesn&#39;t share the generator&#39;s context. This session wrote the boundary check and the proof for trail 0003, so it carries the same blind spots.
+
+Trail 0003 shows it. The proof passed every sample its author wrote. Then four adversarial samples I wrote in a second pass all slipped through, and a fifth still does. A same-context check would have repeated the first result. So the Checker stays a fresh, read-only session that re-runs the proof itself and writes its own samples. I won&#39;t write <code>05-check</code> or a PASS, LOOP or HALT here, because EC-004 says nobody scores their own work.
+
+<strong>The fastest way to run it properly.</strong>
+1. Open a new Claude Code session in the repo, with no history.
+2. Paste the seed below.
+3. It should write only <code>05-check.jsonl</code>, with exactly one verdict.
+
+I could start that headless process from here, but it spends usage and you deferred that earlier, so tell me &quot;run it&quot; if you want me to. A headless run would still be a separate process with no Maker context.
+
+<strong>Checker → Reflector.</strong> I checked nothing new this turn. I gave you an answer to the pattern question.
+
+<strong>Reflector.</strong> The lesson is that &quot;the chain can check it&quot; and &quot;the Maker can check it&quot; are different claims. The chain can, but only across a context boundary. That fits what you had in mind for each Chief: a team whose members embody plan, make and check, with the check seat isolated from the make seat.
+
+<strong>Next seed:</strong>
+<code>@cto-checker /pmcro:check 0003-ec0002-must-fail: fresh Claude Code session in the repo, read-only, no Maker context. Re-run eng/Test-BoundaryProof.ps1 yourself, then write your own must-fail samples, including one that names an API but uses credentials taken from another person&#39;s session. Issue PASS, LOOP or HALT and write only 05-check.jsonl.</code></div>
+</article>
+<article class="blk" id="rt-08" data-chief="Chief of Staff" data-trail="none" style="--h:25">
+<h2 class="who">I am the Chief of Staff:</h2>
+<p class="meta"><span class="chip">Chief of Staff</span><span class="chip">Trail: none</span><button class="play" type="button">Play</button></p>
+<blockquote class="seed"><strong>Seed:</strong> We only got 90% session uh, left. Uh, what I&#39;m going to end up doing is um, extracting, pulling the data from this session as well. Um, and I&#39;m going to log on another account. What I&#39;m going to do, I&#39;d rather you do is hurry up and just give me the next seed intent to give to the next session to look at all the session and create um what will we call it let&#39;s call it the round table like a html actually ooh, it can do docs fx or html page so i can just like run it in a browser and you know and even just listen to them from there etc</blockquote>
+<div class="body"><strong>I am the Chief of Staff, and I orchestrate your handoff by writing one seed for the next session.</strong> Give that session the exported chat data and the repo, and it should open its own trail before building anything.
+
+<strong>State to hand over.</strong>
+- <strong>Repo:</strong> the local repo is at commit <code>e5eac13</code>, and nothing is pushed.
+- <strong>Trail 0001:</strong> loop 2 is committed and awaits a fresh Checker.
+- <strong>Trail 0002:</strong> EC-0002 is committed and awaits a fresh Checker.
+- <strong>Trail 0003:</strong> loop 2 is committed and awaits a fresh Checker. It has one loop left, and a known gap: a step that names an API but uses another person&#39;s session cookies still passes.
+- <strong>Queue:</strong> item 0004 (install the Agent Governance Toolkit, approved by you) has not started.
+- <strong>Waiting on you:</strong> the CFO ceiling, and the Checker rename candidates.
+
+<strong>Reflector.</strong> Keep the seed to one deliverable. The Round Table page should be static, so it opens straight from disk with no server and works offline. The &quot;listen&quot; part can use the browser&#39;s built-in speech synthesis, with a different voice per Chief.
+
+<strong>Next seed:</strong>
+<code>@chief-of-staff /pmcro:seed Read the exported chat data from the previous session plus the repo, and build the Round Table as one self-contained HTML page under docs/ that opens by double-click in a browser with no server, no external requests and only relative paths. It shows every Round Table exchange as a transcript, one block per Chief in the &quot;I am the [full title]:&quot; / &quot;Hey [full title],&quot; format, with the Chief&#39;s name, the trail and the seed it belongs to. A Play button per block and a Play all button read the transcript aloud with the browser&#39;s built-in speech synthesis, one distinct voice per Chief, with pause, skip and speed. A filter by Chief and by trail. Build it so DocFX can also include it as a docs page. Open the trail first (log before act), keep EC-0001 and EC-0002, write must-fail proofs (for example, the page fails its check if any block is missing a speaker or any link is absolute), no push and no install, and stop at HANDOFF: CHECKER REQUIRED.</code></div>
+</article>
+
+</main>
+<script>
+(function(){
+var synth=window.speechSynthesis,$=function(s){return document.querySelector(s)},A=function(s){return Array.prototype.slice.call(document.querySelectorAll(s))};
+var chiefs=A('#f-chief option').map(function(o){return o.value}).filter(Boolean);
+var voices=[],q=[],pos=0,chunks=[],ci=0,gen=0,paused=false;
+function loadVoices(){if(!synth)return;var v=synth.getVoices(),en=v.filter(function(x){return /^en/i.test(x.lang)});voices=(en.length?en:v).slice().sort(function(a,b){return a.name<b.name?-1:1})}
+function pick(t){var i=Math.max(0,chiefs.indexOf(t)),n=voices.length||1,r=Math.floor(i/n);return{v:voices[i%n],p:[1,0.75,1.25,0.6][r%4]}}
+function split(t){var out=[],cur='',s=t.replace(/\s+/g,' ').match(/[^.!?:;]+[.!?:;]*\s*/g)||[t];s.forEach(function(x){if(cur&&(cur+x).length>180){out.push(cur);cur=x}else cur+=x});if(cur)out.push(cur);return out}
+function mark(b){A('.blk.on').forEach(function(x){x.classList.remove('on')});if(b){b.classList.add('on');b.scrollIntoView({block:'center'})}}
+function reset(){paused=false;$('#pause').textContent='Pause'}
+function say(){var b=q[pos],g=gen,p=pick(b.dataset.chief),u=new SpeechSynthesisUtterance(chunks[ci]);
+if(p.v)u.voice=p.v;u.pitch=p.p;u.rate=+$('#speed').value;
+function nxt(){if(g!==gen)return;ci++;if(ci<chunks.length)say();else{pos++;begin()}}
+u.onend=nxt;u.onerror=nxt;
+$('#status').textContent='Speaking: '+b.dataset.chief+(p.v?' ('+p.v.name+')':'');synth.speak(u)}
+function begin(){var b=q[pos];if(!b){stop();return}mark(b);chunks=split(b.querySelector('.body').innerText);ci=0;say()}
+function halt(){gen++;synth.cancel();synth.resume();reset()}
+function stop(){gen++;if(synth){synth.cancel();synth.resume()}q=[];mark(null);reset();$('#status').textContent='Stopped'}
+function run(list){if(!synth||!list.length)return;halt();q=list;pos=0;begin()}
+function visible(){return A('.blk').filter(function(b){return !b.hidden})}
+function filt(){var c=$('#f-chief').value,t=$('#f-trail').value,n=0;A('.blk').forEach(function(b){var ok=(!c||b.dataset.chief===c)&&(!t||b.dataset.trail===t);b.hidden=!ok;if(ok)n++});$('#count').textContent='Showing '+n+' of '+A('.blk').length}
+$('#f-chief').onchange=filt;$('#f-trail').onchange=filt;
+$('#play-all').onclick=function(){run(visible())};
+A('.play').forEach(function(x){x.onclick=function(){run([x.closest('.blk')])}});
+$('#pause').onclick=function(){if(!synth||!q.length)return;if(paused){synth.resume();reset()}else{synth.pause();paused=true;this.textContent='Resume'}};
+$('#skip').onclick=function(){if(!q.length)return;halt();pos++;begin()};
+$('#stop').onclick=stop;
+$('#speed').onchange=function(){if(q.length&&q[pos]){halt();say()}};
+if(!synth){A('button').forEach(function(b){b.disabled=true});$('#status').textContent='Speech synthesis is not available in this browser; the transcript is still readable.'}else{loadVoices();synth.onvoiceschanged=loadVoices}
+filt();
+})();
+</script>
+</body>
+</html>
