@@ -22,7 +22,7 @@ jobs:
       - run: dotnet build Pmcro.slnx -c Release
       - name: DocFX (warnings are errors)
         run: dotnet docfx docs/docfx.json --warningsAsErrors
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: docs/_site
   deploy:
