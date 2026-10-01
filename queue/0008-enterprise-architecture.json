@@ -1,0 +1,18 @@
+{
+  "id": "0008",
+  "raw_intent": "@orchestrator /pmcro:seed this is the approved full structure design etc",
+  "true_intent": "Record the approved enterprise architecture as structural boundaries only. Shawn approves the PMCR-O Enterprise Repository Tree and the Architecture Approval Matrix as the target structure: approve the separation of responsibilities/namespaces in the Section Q stable-boundary batch (canonical/generated separation, .pmcro control plane, Runtime five-role modules, independent-verification boundaries, plugin/package namespaces, host-adapter abstraction, top-level Trail domain, top-level Marketplace + qualification/policy separation, Trail-specific qualification gate, security/authority invariants, testing/docs boundaries). Approval establishes boundaries only; it does not select schemas, serializers, databases, cryptography, Marketplace lifecycle, Trail mechanics, LOOP/ACCEPT semantics, host technologies or model providers, and activates no seat, phase, authority, or spend. Items marked KEEP AS CANDIDATE stay candidate; KEEP OPEN stay unresolved.",
+  "done_means": [
+    "the Enterprise Repository Tree and Architecture Approval Matrix are preserved as reference design records (Project and, when built, repo docs/architecture)",
+    "each approved top-level boundary is scaffolded as its own trail (namespace folder plus README stating the boundary and what remains OPEN/CANDIDATE), never all at once, each Checker-verified",
+    "no mechanics are selected, no seat/phase/authority activated, no law/policy change, no push/install/spend, by any single boundary trail",
+    "candidate and open items are only resolved by later, separately approved seeds"
+  ],
+  "owners": [
+    "cto",
+    "cdo",
+    "cpo"
+  ],
+  "pace": "one boundary per trail, Checker-verified; do not scaffold the whole tree in one trail",
+  "status": "queued"
+}
